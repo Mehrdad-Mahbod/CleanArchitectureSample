@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "fbcaedaa-5501-4c41-b41c-52d15f52ddf8"
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -27,12 +30,18 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "./node_modules/bootstrap/dist/css/bootstrap.rtl.min.css",
+              "node_modules/datatables.net-bs5/css/dataTables.bootstrap5.min.css",
               "src/styles.css"
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/datatables.net/js/jquery.dataTables.min.js",
+              "./node_modules/datatables.net-bs5/js/dataTables.bootstrap5.min.js",
+              "src/assets/JavaScript/javascript.js"
             ]
           },
           "configurations": {
@@ -98,6 +107,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": []

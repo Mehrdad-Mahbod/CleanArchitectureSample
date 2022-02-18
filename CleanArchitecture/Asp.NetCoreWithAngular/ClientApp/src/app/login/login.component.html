@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-lg-4 col-md-3 col-sm-2"></div>
+  <div class="col-lg-4 col-md-6 col-sm-8 CustomDiv">
+    <h3 class="text-center">ورود به سیستم</h3>
+    
+    <form [formGroup]="InputForm" (ngSubmit)="Login()">
+      
+      <div class="form-group">
+        <p class="text-center" for="UserName" style="font-size: x-large;" >نام کاربر</p>
+        <div class="input-group w-75 mr-5">
+          <span class="input-group-addon my-auto"><i class="fa fa-user fa-lg"></i></span>
+          <input type="text" class="form-control " formControlName="UserName" placeholder="نام کاربری" name="UserName"
+            required>
+        </div>
+        <br />
+        <div class="container-fluid mr-5">
+          <span *ngIf="GetControl.UserName.touched && GetControl.UserName.invalid" class="text-danger">*لطفا
+            نام کاربری را وارد کنید</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <p for="Password" class="text-center" style="font-size: x-large;">رمز عبور</p>
+        <div class="input-group w-75 mr-5">
+          <span class="input-group-addon my-auto"><i class="fa fa-lock fa-lg"></i></span>
+          <input type="password" class="form-control" formControlName="Password" placeholder="رمز عبور" name="Password"
+            required>
+        </div>
+        <br />
+        <div class="container-fluid mr-5">
+          <span *ngIf="GetControl.Password.touched && GetControl.Password.invalid" class="text-danger">*لطفا
+            رمز عبور را وارد کنید</span>
+        </div>
+      </div>
+
+
+      <div class="form-group form-check form-inline">
+        <label class="form-check-label mr-5" style="font-size: x-large;">
+          <input type="checkbox">به خاطر بسپار
+        </label>
+        <!--d-block mx-auto-->
+        <button type="submit" class="btn btn-success mr-4">
+          <i class="fa fa-sign-in fa-lg my-auto"></i>
+          ورود
+        </button>
+      </div>
+     
+    </form>
+  </div>
+  <div class="col-lg-4 col-md-3 col-sm-2"></div>
+</div>

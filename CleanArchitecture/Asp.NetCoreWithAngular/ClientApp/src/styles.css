@@ -1,1 +1,155 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/*SidebarWrapper***********************************************************************************************************************/
+#SidebarWrapper {
+  direction: rtl;
+  z-index: 1000;
+  position: absolute;
+  /*left: 250px;*/
+  right: 240px;
+  width: 0;
+  height: 100%;
+  margin-right: -250px;
+  /*overflow-y: auto;*/
+  /*background: #000;*/
+  background-color: #343a40;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  /*border-radius: 5px;*/
+}
+.SidebarNav {
+  position: absolute;
+  top: 0;
+  width: 280px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  margin-top: 2px;
+  height: auto;
+}
+  .SidebarNav li {
+      /*text-indent: 17px;*/
+      text-indent: 10px;
+      line-height: 40px;
+      /*Add by Mehrdad*/
+      text-align: right;
+  }
+      .SidebarNav li a {
+          display: block;
+          text-decoration: none;
+          /*color: #999999;*/
+          color:#ffffff;
+           /*color:#898989;*/
+          /*Add By Mehrdad*/
+          /*padding-right: 1%;*/
+          padding-right: 0;
+      }
+          .SidebarNav li a:hover {
+              text-decoration: none;
+              /*color: #a7a7a7;*/
+              color: #ff9900;
+              /*color: #ffc800c4;*/
+              /*background: rgb(34 102 161);*/
+              /*background: rgb(122 122 122);*/
+              background: rgb(62 62 62);
+              /*border-left: red 2px solid;*/
+              /*border-left: #ffa000 2px solid;*/
+              border-radius: 3px;
+              border-right: #ff8f00b0 2px solid;
+              margin-right: -1px; /*برای جلوگیزی از پرش به سمت راست*/
+          }
+          .SidebarNav li a:active,
+          .SidebarNav li a:focus {
+              text-decoration: none;
+          }
+  .SidebarNav > .sidebar-brand {
+      height: 65px;
+      font-size: 18px;
+      line-height: 60px;
+  }
+      .SidebarNav > .sidebar-brand a {
+          color: #999999;
+      }
+          .SidebarNav > .sidebar-brand a:hover {
+              color: #fff;
+              background: none;
+          }
+/*navbar**************************************************************************************************************************************/
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+  height: 56px;
+  border-radius: 3px;
+}
+/************************************************************************************************************************************************/
+.bs-canvas-overlay {
+  opacity: 0;
+  z-index: -1;
+}
+
+  .bs-canvas-overlay.show {
+    opacity: 0.50;
+    z-index: 1100;
+  }
+
+.bs-canvas {
+  /*Comment By Mehrdad*/
+  /*top: 0;*/
+  /*top:9%;*/
+  top: 58px;
+  width: 0;
+  z-index: 1110;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.bs-canvas-left {
+  left: 0;
+}
+
+.bs-canvas-right {
+  direction: ltr;
+  right: 0;
+  /*background-color: #343a40;*/
+  /*background-color: #324148 !important;*/
+  overflow-y: auto;
+  /*------------------------------------------------------------------------------------------------------------------------------------*/
+  /*background: #fc00ff;*/ /* fallback for old browsers */
+  /*background: -webkit-linear-gradient(to right, #00dbde, #fc00ff);*/ /* Chrome 10-25, Safari 5.1-6 */
+  /*background: radial-gradient(circle at left top, #711683, #113255)*/
+  background: linear-gradient(225deg, #076ea2 0%, #953288 100%);
+  /*-------------------------------------------------------------------------------------------------------------------------------------*/
+  /*background: #171818;
+    background: -webkit-radial-gradient(top, #171818, #4B4B4B);
+    background: -moz-radial-gradient(top, #171818, #4B4B4B);
+    background: radial-gradient(to bottom, #171818, #4B4B4B);*/
+  /*-------------------------------------------------------------------------------------------------------------------------------------*/
+  /*رنگ اصلی برداشته شده از سایت */
+  /*www.w3schools.com/w3css/tryit.asp?filename=tryw3css_sidebar_animate*/
+  /*background: radial-gradient(circle at center, #616161, #616168)*/
+  /*رنگ اصلی*/
+  background: #333 !important;
+}
+
+.bs-canvas-anim {
+  transition: all .4s ease-out;
+  -webkit-transition: all .4s ease-out;
+  -moz-transition: all .4s ease-out;
+  -ms-transition: all .4s ease-out;
+}
+/************************************************************************************************************************************************/
+@media only screen and (min-width: 768px) { /*حداقل 768 و بزرگتر از این اندازه*/
+  #bs-canvas-right {
+    width: 50px;
+  }
+}
+@media only screen and (max-width: 768px) { /*حداکثر 768 و کمتر از این اندازه*/
+  #bs-canvas-right {
+    width: 0px;
+  }
+}
+/************************************************************************************************************************************************/
+

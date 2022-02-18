@@ -1,0 +1,16 @@
+.CustomImage
+{
+    height: 40px;
+    width: 40px;
+}
+
+.card {
+    min-height: 50px;
+    min-width: 50px;
+}
+.card-text{
+    /*font-size: x-large;*/
+    font-family:'A Iranian Sans' ;
+    font-weight: bolder;
+    color:lightcyan ;
+}

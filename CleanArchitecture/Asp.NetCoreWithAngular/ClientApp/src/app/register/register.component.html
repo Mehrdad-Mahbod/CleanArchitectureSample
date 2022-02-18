@@ -1,0 +1,64 @@
+<div class="row">
+    <div class="col-lg-3 col-md-2 col-sm-1"></div>
+    <div class="col-lg-6 col-md-8 col-sm-10 CustomDiv">
+      <h3>ثبت نام کاربر</h3>
+      <!--Submit روش اول با-->
+
+      <form class="container-fluid" #Form1="ngForm">
+        <div class="form-group">
+          <label>نام:</label>
+          <div class="input-group">
+            <span class="input-group-addon my-auto">
+              <i class="fa fa-envelope-square fa-lg"></i>
+            </span>
+            <input type="text" class="form-control"  name="Name" ngModel="" placeholder="نام"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>نام خانوادگی:</label>
+          <div class="input-group">
+            <span class="input-group-addon my-auto">
+              <i class="fa fa-envelope-square fa-lg"></i>
+            </span>
+            <input type="text" class="form-control" name="Family" ngModel="" placeholder="نام خانوادگی" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>نام کاربر(ورود به سیستم):</label>
+          <div class="input-group">
+            <span class="input-group-addon my-auto">
+              <i class="fa fa-envelope-square fa-lg"></i>
+            </span>
+            <input type="text" class="form-control" name="UserName" ngModel="" placeholder="نام کاربری" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>ایمیل:</label>
+          <div class="input-group">
+            <span class="input-group-addon my-auto">
+              <i class="fa fa-envelope-square fa-lg"></i>
+            </span>
+            <input type="text" class="form-control" name="Email" ngModel="" placeholder="ایمیل"  />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>رمز عبور:</label>
+          <div class="input-group">
+            <span class="input-group-addon my-auto"><i class="fa fa-lock fa-lg"></i></span>
+            <input type="password" class="form-control" name="Password" ngModel="" placeholder="رمز عبور" />
+          </div>
+        </div>
+        <!--type="submit"-->
+        <button type="button" class="btn btn-success d-block mx-auto" (click)="Register(Form1)">
+          <i class="fa fa-registered fa-lg my-auto"></i>
+          ثبت نام
+        </button>
+      </form>
+    </div>
+    <div class="col-lg-3 col-md-2 col-sm-1"></div>
+</div>
+  
+  
+  
+  
+  
