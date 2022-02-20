@@ -82,16 +82,21 @@ namespace Asp.NetCoreWithAngular
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            /*Add By Mehrdad***********/
-            app.UseCookiePolicy();
-            app.UseAuthentication();
-            /*************************/
+            
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();
             }
 
             app.UseRouting();
+
+
+            /*Add By Mehrdad***********/
+            app.UseCookiePolicy();
+            app.UseCors("CorsPolicy");
+            app.UseAuthentication();
+            app.UseAuthorization();
+            /*************************/
 
             app.UseEndpoints(endpoints =>
             {

@@ -17,11 +17,11 @@ namespace Asp.NetCoreWithAngular.Controllers
     [EnableCors("CorsPolicy")] //وقتی از پورت 5000 خوانده می شود باید کامنت نباشد
     [Produces("application/json")]
     [Route("api/[controller]")]
-    public class AccountController : Controller
+    public class AuthenticationController : Controller
     {
         private IUserService _userService;
 
-        public AccountController(IUserService userService)
+        public AuthenticationController(IUserService userService)
         {
             _userService = userService;
         }
