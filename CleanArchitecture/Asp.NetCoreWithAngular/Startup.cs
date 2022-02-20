@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -5,6 +6,13 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using Infrastructure.Data.Context;
+using Infrastructure.Ioc;
 
 namespace Asp.NetCoreWithAngular
 {
@@ -26,6 +34,36 @@ namespace Asp.NetCoreWithAngular
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            /*Add By Mehrdad*/
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            }).AddCookie(options =>
+            {
+                options.LoginPath = "/Login";
+                options.LogoutPath = "/Logout";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(43200);
+            });
+
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("MehrdadConnection"));
+            });
+
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            RegisterServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +82,10 @@ namespace Asp.NetCoreWithAngular
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            /*Add By Mehrdad***********/
+            app.UseCookiePolicy();
+            app.UseAuthentication();
+            /*************************/
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();
@@ -70,6 +112,12 @@ namespace Asp.NetCoreWithAngular
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+        }
+
+        /*Add By Mehrdad***********/
+        public static void RegisterServices(IServiceCollection services)
+        {
+            DependencyContainer.RegisterServices(services);
         }
     }
 }

@@ -42,6 +42,7 @@ export class HomeComponent implements OnInit {
     Au.fromPage = 0;
     Au.toPage = 9;
 
+    /*
     this.HttpService.HttpGetWithObject(this.ServerUrl.Url + "/User/GetListDoctorsForPagination", Au).subscribe(
       Data => {
         /*this.ngbTypeaheadMainGroupDoctorList = Data.slice();
@@ -49,7 +50,7 @@ export class HomeComponent implements OnInit {
         M.id = 0;
         M.name = "سر گروه";
         //M.userId = 0;
-        this.ngbTypeaheadMainGroupDoctorList.unshift(M); /*push(D);*/
+        this.ngbTypeaheadMainGroupDoctorList.unshift(M); /*push(D);/*
         this.UserList = Data;
         //console.log(Data);
       },
@@ -58,6 +59,8 @@ export class HomeComponent implements OnInit {
       },
       () => {
       });
+
+      */
   }
 
   public onPageChange(pageNum: number): void {

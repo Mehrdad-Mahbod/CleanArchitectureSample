@@ -1,0 +1,29 @@
+[
+    {
+        "ID": 1,
+        "Name": "مهرداد",
+        "Family": "مهبد",
+        "Address": "dfgetrrutrurtrtretretrgtregخیابان قدس",
+        "Phone": "04131111111",
+        "FatherName": "حمید",
+        "IsActive": true
+    },
+    {
+        "ID": 2,
+        "Name": "بهمن",
+        "Family": "مهبد",
+        "Address": "reteertretrturturetretretrtertخیابان امام",
+        "Phone": "041344444444",
+        "FatherName": "حمید",
+        "IsActive": false
+    },
+    {
+        "ID": 3,
+        "Name": "احسان",
+        "Family": "مهبد",
+        "Address": "retretrrtrurturtetretetretretreخیابان خرسندی",
+        "Phone": "04135555555",
+        "FatherName": "حمید",
+        "IsActive": true
+    }
+]

@@ -1,25 +1,49 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule, Routes } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
 import { HttpConfigInterceptor } from './interceptor/httpconfig.interceptor';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 import { AuthenticationService } from './Services/authentication.service';
 import { AuthguardService } from './Services/authguard.service';
 import { ServerurlService } from './Services/serverurl.service';
+import { SharedModule } from './shared/shared.module';
+
+const routes: Routes = [
+  { path: '', component: HomeComponent },
+  { path: 'Home', component: HomeComponent },
+  { path: 'Register', component: RegisterComponent,/*canActivate: [AuthGuardService]*/ },
+  { path: 'Login', component: LoginComponent },
+  /*{ path: 'Customer', component: CustomerComponent, canActivate: [AuthguardService] },*/
+]
+
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgbModule
+    FormsModule,
+    ReactiveFormsModule,
+    NgbModule,
+    RouterModule.forRoot(routes),
+    SharedModule.forRoot(),
+
   ],
   providers: [
     AuthenticationService,

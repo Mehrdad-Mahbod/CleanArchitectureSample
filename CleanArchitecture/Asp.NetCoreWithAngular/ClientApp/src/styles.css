@@ -1,7 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: /*Roboto*/url(assets/Fonts/Yekan.ttf), "Helvetica Neue", sans-serif; }
+
 
 /*SidebarWrapper***********************************************************************************************************************/
 #SidebarWrapper {
@@ -152,4 +153,46 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 /************************************************************************************************************************************************/
-
+/*card*************************************************************************/
+.card > a {
+  color: unset;
+  text-decoration: none;
+}
+.CustomCard {
+  border: none;
+}
+.card-body > ul > li > a {
+  color: unset;
+  text-decoration: none;
+}
+  .card-body > ul > li > a:hover {
+      color: forestgreen;
+      font-weight: bold;
+  }
+.card-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
+}
+@media (min-width: 576px) {
+  .card-deck {
+      display: flex;
+      flex-flow: row wrap;
+      margin-right: -15px;
+      margin-left: -15px;
+  }
+      .card-deck .card {
+          flex: 1 0 0%;
+          margin-right: 15px;
+          margin-bottom: 0;
+          margin-left: 15px;
+      }
+}
+/************************************************************************************************************************************************/
+ .CustomDiv {
+  box-shadow: 1px 5px 10px #003163;
+  border: 1px;
+  border-radius: 3px;
+}
+ 
+/************************************************************************************************************************************************/

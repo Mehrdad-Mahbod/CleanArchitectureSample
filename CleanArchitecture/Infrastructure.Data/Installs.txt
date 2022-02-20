@@ -1,0 +1,4 @@
+﻿1)Microsoft.EntityFrameWorkCore
+2)Microsoft.EntityFrameWorkCore.Desine
+3)Microsoft.EntityFrameWorkCore.SqlServer
+4)Microsoft.EntityFrameWorkCore.Tools

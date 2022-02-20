@@ -1,4 +1,4 @@
-<header class="container-fluid p-0">
+<header class="container-fluid p-0 bg-info.bg-gradient">
   <nav class="navbar navbar-expand-sm *fixed-top navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
     <div class="container-fluid">
       <!-- <a class="navbar-brand ms-5" asp-area="" asp-controller="Home" asp-action="Index">معماری تمیز</a> -->
@@ -25,7 +25,46 @@
             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
           </li>
         </ul>
-        <!-- <partial name="_LoginPartial" /> -->
+
+        <ul class="navbar-nav mr-auto">
+          <div class="form-inline" *ngIf="IsLoggedIn()">
+            <!--<form class="form-inline my-2 my-lg-0">-->
+            <form class="my-2 my-lg-0">
+              <img src="../assets/User.jpg" class="img-fluid rounded-circle" alt="User" width="40" height="40">
+              <span> </span>
+              <b>سلام</b>
+              <span> </span>
+              <span id="UserName"></span>
+            </form>
+            <li class="nav-item mr-auto">
+              <a class="nav-link" href="javascript:void(0)" (click)="Logout()">
+                <i class="fa fa-power-off fa-lg"></i>
+                خروج
+              </a>
+            </li>
+          </div>
+
+          <li class="form-inline" *ngIf="!IsLoggedIn()">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a routerLink='/Login' class="nav-link" href="#">
+                  <i class="fa fa-lg fa-sign-in"></i>
+                  ورود
+                </a>
+              </li>
+              <li class="nav-item active">
+                <a routerLink="/Register" class="nav-link" href="#">
+                  <i class="fa fa-user-circle fa-lg"></i>
+                  ثبت نام
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+
+
+
       </div>
     </div>
   </nav>
@@ -37,7 +76,7 @@
               <h4 class="d-inline-block text-light mb-0 float-right">Canvas Header</h4> -->
 
     <div class="carbon flex-wrapper">
-      <img class="img-fluid rounded-circle rounded-3" src="../assets/Files/User.jpg" />
+      <img class="img-fluid rounded-circle rounded-3" src="../assets/Images/User.jpg" />
       <div class="inner-wrapper">
         <p class="text-white block text-truncate">مهرداد مهبد</p>
         <p class="text-white block text-truncate">اعتبار:</p>
@@ -50,13 +89,15 @@
 
   <div class="bs-canvas-content px-3 /*py-5*/">
     <div id="SidebarWrapper">
-      <ul class="SidebarNav nav-pills nav-stacked /*border*/ /*border-secondary*/ rounded-3 shadow position-relative" id="StaticMenu">
+      <ul class="SidebarNav nav-pills nav-stacked /*border*/ /*border-secondary*/ rounded-3 shadow position-relative"
+        id="StaticMenu">
         <!-- @if (this.User.IsInRole("مدیر سیستم"))
                   {
                       @*<partial name="_AdminMenuPartial" />*@
                   } -->
       </ul>
-      <ul class="SidebarNav nav-pills nav-stacked /*border*/ /*border-secondary*/ rounded-3 shadow position-relative" id="DynamicMenu">
+      <ul class="SidebarNav nav-pills nav-stacked /*border*/ /*border-secondary*/ rounded-3 shadow position-relative"
+        id="DynamicMenu">
         <!-- @{
                       <partial name="_LoadMenuForUserPartial" />
                   } -->
@@ -66,7 +107,7 @@
 </div>
 
 <div class="container-fluid position-relative">
-  <main role="main" id="MainRenderBody">
+  <main role="main" id="MainRenderBody" class="ms-5 bg-light ">
     <router-outlet></router-outlet>
   </main>
 </div>

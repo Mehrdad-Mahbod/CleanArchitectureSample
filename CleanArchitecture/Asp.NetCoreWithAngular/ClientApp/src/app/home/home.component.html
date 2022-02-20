@@ -1,32 +1,38 @@
 <div class="card">
   <div class="card-header pt-0 pb-0">
-    <div class="row form-inline d-flex justify-content-end mt-0 ">
-      <span class="ml-auto pt-2">
-        <p class="text-right mr-2 ml-auto"
-          style="font-family:'IranNastaliq';font-size:large;font-weight: bolder;line-height:initial">
-          سیستم رزرواسیون
-          پزشکان
-        </p>
-      </span>
-      <button class="btn btn-info btn-sm ml-1" routerLink="/RegistrationDoctors" ngbPopover="ثبت نام پزشکان"
-        popoverTitle="" placement="bottom" popoverClass="text-info" triggers="mouseenter:mouseleave">
-        <img src="../../assets/VectorDoctor.jpg" class="rounded-circle CustomImage" alt="Cinque Terre">
-      </button>
-      <button class="btn btn-info btn-sm ml-1" routerLink="/RegistrationDoctors" ngbPopover=" ثبت نام بیمار"
-        popoverTitle="" placement="bottom" popoverClass="text-info" triggers="mouseenter:mouseleave">
-        <img src="../../assets/Patient.png" class="rounded-circle CustomImage" alt="Cinque Terre">
-      </button>
-      <button class="btn btn-info btn-sm ml-1" routerLink="/RegistrationDoctors" ngbPopover="ثبت نام منشی"
-        popoverTitle="" placement="bottom" popoverClass="text-info" triggers="mouseenter:mouseleave">
-        <img src="../../assets/SecretaryClip.png" class="rounded-circle CustomImage" alt="Cinque Terre">
-      </button>
+
+
+    <div class="row">
+      <div class="col ps-0">
+        <span class="my-auto">
+          <p class="text-right m-0"
+            style="font-family:'IranNastaliq';font-size:large;font-weight: bolder;line-height:initial">
+            سیستم معماری تمیز
+          </p>
+        </span>
+      </div>
+      <div class="col d-flex align-items-center justify-content-end ">
+
+
+        <button class="btn btn-info btn-sm me-1" routerLink="/RegistrationDoctors" ngbPopover="سوپروایزر"
+          popoverTitle="" placement="bottom" popoverClass="text-info" triggers="mouseenter:mouseleave">
+          <img src="../../assets/Images/SuperUser.jpg" class="rounded-circle CustomImage" alt="Cinque Terre">
+        </button>
+
+      </div>
     </div>
+
+
+
+
+
+
   </div>
   <div class="card-body">
     <hr class="mx-auto w-100 d-none " />
-    <!--
-    <div class="row form-inline">
-      <ngb-carousel *ngIf="Images" class="img-responsive d-block mx-auto">
+
+    <div class="d-flex justify-content-center">
+      <ngb-carousel *ngIf="Images" class="img-responsive d-block mx-auto ">
         <ng-template ngbSlide>
           <img [src]="Images[0]" alt="Random first slide" class="img-fluid">
           <div class="carousel-caption">
@@ -45,7 +51,6 @@
         </ng-template>
       </ngb-carousel>
     </div>
-  -->
 
     <hr class="mx-auto w-100 " />
 
@@ -56,10 +61,13 @@
 
       <div class="col-xl-2 col-lg-3 col-md-4 col-sm-4">
         <div *ngIf="User.imgBase64">
-          <img [src]="'data:image/jpeg;base64,' + User.imgBase64" class="img-fluid mx-auto mt-3 d-block img-thumbnail" /><!--rounded-circle-->     
+          <img [src]="'data:image/jpeg;base64,' + User.imgBase64"
+            class="img-fluid mx-auto mt-3 d-block img-thumbnail" />
+          <!--rounded-circle-->
         </div>
         <div *ngIf="!User.imgBase64">
-          <img src="../../assets/DoctorIcon.png" height="100px" width="100px" class="img-fluid mx-auto mt-4 d-block  rounded-circle img-thumbnail" />
+          <img src="../../assets/DoctorIcon.png" height="100px" width="100px"
+            class="img-fluid mx-auto mt-4 d-block  rounded-circle img-thumbnail" />
         </div>
       </div>
 
