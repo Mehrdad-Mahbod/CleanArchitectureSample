@@ -11,12 +11,14 @@ namespace Domain.Models
 {
     public class UserMenu : BaseEntity
     {
+        public User User { get; set; }
         public int UserId { get; set; }
+        public Menu Menu { get; set; }
         public int MenuId { get; set; }
         public int RegisteredUserId { get; set; }
         //[NotMapped]
-        [JsonIgnore]
-        public Menu Menu { get; set; }
+        //[JsonIgnore]
+        
         public UserMenu()
         {
 

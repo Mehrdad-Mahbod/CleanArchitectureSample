@@ -14,7 +14,7 @@ namespace Domain.Models
         public string Component { get; set; }
         public string Icon { get; set; }
         public bool IsSelective { get; set; }
-        [ForeignKey("MenuId"), Required]
+        //[ForeignKey("MenuId"), Required]
         public virtual ICollection<UserMenu> UserMenus { get; set; }
         //[ForeignKey("MenuId"), Required]
         public virtual ICollection<RoleMenu> RoleMenus { get; set; }

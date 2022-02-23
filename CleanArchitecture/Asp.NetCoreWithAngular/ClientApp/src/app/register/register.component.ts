@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder,FormGroup,FormControl, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from '../Models/User';
+import { RegisterViewModel } from '../ViewModels/Authentication/RegisterViewModel';
 import { AuthenticationService } from '../Services/authentication.service'
 
 @Component({
@@ -23,6 +23,7 @@ export class RegisterComponent implements OnInit {
       'Name': new FormControl(null),
       'Family': new FormControl(null),
       'UserName': new FormControl(null),
+      'PhoneNumber':new FormControl(null),
       'Email': new FormControl(null),
       'Password': new FormControl(null) ,
     }); 
@@ -31,8 +32,8 @@ export class RegisterComponent implements OnInit {
   Register(Form1: NgForm) {
     //alert(JSON.stringify(Form1.value));
     //let userInfo: IUser = Object.assign({}, this.formGroup.value);
-    let userInfo: User = Object.assign({}, Form1.value);
-    this.authenticationService.Register(userInfo).
+    let RegisterViewModel: RegisterViewModel = Object.assign({}, Form1.value);
+    this.authenticationService.Register(RegisterViewModel).
       subscribe(Data => alert(Data),/*token => this.recibirToken(token),*/
       error => this.ErrorManagement(error),
       ()=> this.Complete()

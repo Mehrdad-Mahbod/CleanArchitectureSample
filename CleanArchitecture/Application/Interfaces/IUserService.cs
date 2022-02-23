@@ -6,10 +6,11 @@ using Domain.Models;
 
 namespace Application.Interfaces
 {
-   public interface IUserService
-   {
-       CheckUser CheckUser(string username, string email);
-       int RegisterUser(User user);
-       bool IsExistUser(string email, string password);
-   }
+    public interface IUserService
+    {
+        CheckUser CheckUser(RegisterViewModel RegisterViewModel);
+        int RegisterUser(User user);
+        bool IsExistUser(string email, string password);
+        User SelectUserNameWithPassword(LoginViewModel LoginViewModel);
+    }
 }

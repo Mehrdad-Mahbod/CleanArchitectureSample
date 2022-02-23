@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbCarouselConfig, NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
-import { User } from '../Models/User';
+import { LoginViewModel } from '../ViewModels/Authentication/LoginViewModel';
+import { User } from '../ViewModels/User';
 import { AuthenticationService } from '../Services/authentication.service';
 import { PublichttpService } from '../Services/publichttp.service';
 import { ServerurlService } from '../Services/serverurl.service';

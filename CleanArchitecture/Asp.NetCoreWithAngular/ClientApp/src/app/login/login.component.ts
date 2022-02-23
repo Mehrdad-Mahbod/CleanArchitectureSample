@@ -6,7 +6,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 import * as $ from "jquery"
 
-import { User } from '../Models/User';
+import { LoginViewModel } from '../ViewModels/Authentication/LoginViewModel';
+import { RegisterViewModel } from '../ViewModels/Authentication/RegisterViewModel';
 
 import { AuthenticationService } from '../Services/authentication.service';
 import { ServerurlService } from '../Services/serverurl.service';
@@ -48,9 +49,9 @@ export class LoginComponent implements OnInit {
 
     console.log(this.InputForm);
     if (this.InputForm.valid) {
-      let userInfo: User = Object.assign({}, this.InputForm.value);
+      let LoginViewModel: LoginViewModel = Object.assign({}, this.InputForm.value);
       var Message: String;
-      this.authenticationService.Login(userInfo).
+      this.authenticationService.Login(LoginViewModel).
         subscribe(token => {
           if (token == 0) {
             //alert("چنین کاربری در سیستم تعریف نشده");

@@ -5,14 +5,14 @@ using Domain.Models;
 
 namespace Domain.Interfaces
 {
-   public interface IUserRepository
-   {
-       bool IsExistUser(string email, string password);
-
-
-       void AddUser(User user);
-       bool IsExistUserName(string userName);
-       bool IsExistEmail(string email);
-       void Save();
-   }
+    public interface IUserRepository
+    {
+        bool IsExistUser(string Email, string Password);
+        bool IsExistUserName(string UserName);
+        bool IsExistEmail(string Email);
+        bool IsExistPhoneNumber(string Name,string Family ,string PhoneNumber);
+        User SelectUserNameWithPassword(string UserName, string Password);        
+        void AddUser(User user);
+        void Save();
+    }
 }

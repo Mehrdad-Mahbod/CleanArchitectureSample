@@ -8,10 +8,10 @@ namespace Domain.Models
 {
     public class City : BaseEntity
     {
-        [NotMapped]
+        //[NotMapped]
         public virtual Province Province { get; set; }
         [ForeignKey("ProvinceId")]
-        public short ProvinceId { get; set; }
+        public int ProvinceId { get; set; }
         [Column("Name")]
         public string Name { get; set; }
         public virtual ICollection<User> Users { get; set; }

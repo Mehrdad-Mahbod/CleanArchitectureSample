@@ -9,6 +9,15 @@ namespace Application.ViewModels
     {
         [Required]
         [MaxLength(250)]
+        public string UserName { get; set; }
+
+        [Required]
+        [MaxLength(11)]
+        [EmailAddress]
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        [MaxLength(250)]
         [EmailAddress]
         public string Email { get; set; }
 

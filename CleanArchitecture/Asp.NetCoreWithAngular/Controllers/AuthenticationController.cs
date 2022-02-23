@@ -11,6 +11,10 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace Asp.NetCoreWithAngular.Controllers
 {
@@ -19,11 +23,13 @@ namespace Asp.NetCoreWithAngular.Controllers
     [Route("api/[controller]")]
     public class AuthenticationController : Controller
     {
-        private IUserService _userService;
+        private IUserService UserService;
+        private IConfiguration Configuration;
 
-        public AuthenticationController(IUserService userService)
+        public AuthenticationController(IUserService UserService, IConfiguration Configuration)
         {
-            _userService = userService;
+            this.UserService = UserService;
+            this.Configuration = Configuration;
         }
 
 
@@ -37,26 +43,42 @@ namespace Asp.NetCoreWithAngular.Controllers
 
         [HttpPost]
         [Route("Register")]
-        public IActionResult Register(RegisterViewModel register)
+        public IActionResult Register([FromBody] RegisterViewModel RegisterViewModel)
         {
-            if (!ModelState.IsValid)
-                return View(register);
-
-            CheckUser checkUser = _userService.CheckUser(register.UserName, register.Email);
-            if (checkUser != CheckUser.OK)
+            ModelState.Remove("Email");
+            ModelState.Remove("UserName");
+            ModelState.Remove("Password");
+            ModelState.Remove("RePassword");
+            if (ModelState.IsValid)
             {
-                ViewBag.Check = checkUser;
-                return View(register);
+
+                CheckUser CheckUser = UserService.CheckUser(RegisterViewModel);
+                if (CheckUser != CheckUser.OK)
+                {
+                    ViewBag.Check = CheckUser;
+                    return View(RegisterViewModel);
+                }
+
+                User User = new User()
+                {
+                    //Email = RegisterViewModel.Email.Trim().ToLower(),
+                    UserName = RegisterViewModel.PhoneNumber,
+                    Name = RegisterViewModel.Name,
+                    Family = RegisterViewModel.Family,
+                    PhoneNumber = RegisterViewModel.PhoneNumber,
+                    Password = PasswordHelper.EncodePasswordMd5("123"),
+                    CityId = 6,
+                    UserRoles = new List<UserRole>() { new UserRole() { RoleId = 1 } }
+                };
+                UserService.RegisterUser(User);
+
+                //return Ok(TogList);
+                return Json("کاربر مورد نظر در سیستم درج گردید!");
             }
-            User user = new User()
+            else
             {
-                Email = register.Email.Trim().ToLower(),
-                Password = PasswordHelper.EncodePasswordMd5(register.Password),
-                UserName = register.UserName,
-            };
-            _userService.RegisterUser(user);
-
-            return View("SuccessRegister",register);
+                return BadRequest("اطلاعات ناقص می باشد!!");
+            }
         }
 
         #endregion
@@ -72,40 +94,96 @@ namespace Asp.NetCoreWithAngular.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public IActionResult Login(LoginViewModel login,string ReturnUrl)
+        public IActionResult Login([FromBody] LoginViewModel LoginViewModel, string ReturnUrl)
         {
-            if (!ModelState.IsValid)
-                return View(login);
-
-            if (!_userService.IsExistUser(login.Email, login.Password))
+            ModelState.Remove("Email");
+            ModelState.Remove("PhoneNumber");            
+            if (ModelState.IsValid)
             {
-                ModelState.AddModelError("Email","User Not Found ...");
-                return View(login);
+                User U = UserService.SelectUserNameWithPassword(LoginViewModel);
+
+                if (U != null)
+                {
+                    var Claims = new[]
+                    {
+                        new Claim("UserID", U.ID.ToString()),
+                        new Claim("RoleID", U.UserRoles.ToList()[0].RoleId.ToString()),
+                        //new Claim(ClaimTypes.Name,U.Email),
+                        //new Claim(ClaimTypes.NameIdentifier,LoginViewModel.Email)
+                        new Claim(JwtRegisteredClaimNames.UniqueName , U.UserName/*UserInfo.ID.ToString()*/),
+                        new Claim(JwtRegisteredClaimNames.FamilyName ,U.Name + " " + U.Family),
+                        //new Claim(JwtRegisteredClaimNames.Email ,UserInfo.Email),
+                        new Claim(JwtRegisteredClaimNames.Jti ,Guid.NewGuid().ToString())
+                    };
+
+                    var Identity = new ClaimsIdentity(Claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var Principal = new ClaimsPrincipal(Identity);
+                    var Properties = new AuthenticationProperties()
+                    {
+                        IsPersistent = LoginViewModel.RememberMe
+                    };
+
+                    HttpContext.SignInAsync(Principal, Properties);
+                    /*return Redirect(ReturnUrl);*/
+
+                    /****************************************/
+                    var Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:MehrdadSecurityKey"]));
+                    var creds = new SigningCredentials(Key, SecurityAlgorithms.HmacSha256);
+
+                    var Expiration = DateTime.UtcNow.AddDays(7);
+
+                    JwtSecurityToken token = new JwtSecurityToken(
+                        issuer: Configuration["Jwt:Value"],
+                        audience: Configuration["Jwt:Value"],
+                        claims: Claims,
+                        expires: Expiration,
+                        signingCredentials: creds);
+
+                    return Ok(new
+                    {
+                        token = new JwtSecurityTokenHandler().WriteToken(token),
+                        expiration = Expiration
+                    });
+                }
+                else
+                {
+                    return BadRequest("چنین کاربری در سیستم موجود نمی باشد!!");
+                }
             }
-
-            var claims = new List<Claim>()
+            else
             {
-                new Claim(ClaimTypes.Name,login.Email),
-                new Claim(ClaimTypes.NameIdentifier,login.Email)
-            };
-            var identity = new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme);
-            var principal = new ClaimsPrincipal(identity);
-            var properties = new AuthenticationProperties()
-            {
-                IsPersistent = login.RememberMe
-            };
-
-            HttpContext.SignInAsync(principal, properties);
-
-            return Redirect(ReturnUrl);
+                //return View(LoginViewModel);
+                return BadRequest();
+            }
         }
 
         #endregion
 
+        [Route("Logout")]
         public IActionResult Logout()
         {
-            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return Redirect("/");
+            /*HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Redirect("/");*/
+            try
+            {
+                //await SignInManager.SignOutAsync();
+                string[] Message = new string[2];
+                string IsLoginText = string.Empty;
+                if (User?.Identity.IsAuthenticated == true)
+                {
+                    IsLoginText = "لاگین بود";
+                }
+                HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                //Message[0] = IsLoginText + UserManager.GetUserId(HttpContext.User);
+                Message[0] = IsLoginText + HttpContext.User.Identity;
+                Message[1] = "شما از سیستم خارج شدید";
+                return Ok(Message);
+            }
+            catch (SystemException Ex)
+            {
+                return BadRequest(Ex.Message);
+            }
+
         }
     }
 }

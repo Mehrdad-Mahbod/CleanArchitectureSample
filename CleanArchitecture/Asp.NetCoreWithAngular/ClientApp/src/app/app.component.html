@@ -27,22 +27,24 @@
         </ul>
 
         <ul class="navbar-nav mr-auto">
-          <div class="form-inline" *ngIf="IsLoggedIn()">
-            <!--<form class="form-inline my-2 my-lg-0">-->
-            <form class="my-2 my-lg-0">
-              <img src="../assets/User.jpg" class="img-fluid rounded-circle" alt="User" width="40" height="40">
+          <li class="form-inline d-flex align-items-center" *ngIf="IsLoggedIn()">
+            <form class="form-inline my-2 my-lg-0">
+              <img src="../assets/Images/User.jpg" class="img-fluid rounded-circle" alt="User" width="40" height="40">
               <span> </span>
               <b>سلام</b>
               <span> </span>
               <span id="UserName"></span>
             </form>
-            <li class="nav-item mr-auto">
-              <a class="nav-link" href="javascript:void(0)" (click)="Logout()">
-                <i class="fa fa-power-off fa-lg"></i>
-                خروج
-              </a>
-            </li>
-          </div>
+            <ul class="navbar-nav">
+              <li class="nav-item ms-auto border border-danger rounded">
+                <a class="nav-link" href="javascript:void(0)" (click)="Logout()">
+                  <i class="fa fa-power-off fa-lg"></i>
+                  خروج
+                </a>
+              </li>
+            </ul>
+          </li>
+
 
           <li class="form-inline" *ngIf="!IsLoggedIn()">
             <ul class="navbar-nav mr-auto">
@@ -61,10 +63,6 @@
             </ul>
           </li>
         </ul>
-
-
-
-
       </div>
     </div>
   </nav>
@@ -83,25 +81,42 @@
       </div>
     </div>
   </header>
-  <!-- <div class="container d-flex justify-content-center">
-              <hr class="text-white w-100" />
-          </div> -->
+  <div class="container d-flex justify-content-center">
+    <hr class="text-white w-100" />
+  </div>
 
   <div class="bs-canvas-content px-3 /*py-5*/">
     <div id="SidebarWrapper">
-      <ul class="SidebarNav nav-pills nav-stacked /*border*/ /*border-secondary*/ rounded-3 shadow position-relative"
+      <ul class="SidebarNav nav-pills nav-stacked /*borderborder-secondary*/ rounded-3 shadow position-relative"
         id="StaticMenu">
-        <!-- @if (this.User.IsInRole("مدیر سیستم"))
-                  {
-                      @*<partial name="_AdminMenuPartial" />*@
-                  } -->
+
+        <li>
+          <a href="javascript:void(0)">
+            <span class="btn-group-toggle">
+              <i class="fa fa-tachometer"></i>
+            </span>
+            خانه
+          </a>
+        </li>
+        <li>
+          <a href="javascript:void(0)">
+            <span class="btn-group-toggle">
+              <i class="fa fa-smile-o"></i>
+            </span>
+            درباره ما
+          </a>
+        </li>
+        <li>
+          <hr class="text-white w-75 ms-4" />
+        </li>
       </ul>
-      <ul class="SidebarNav nav-pills nav-stacked /*border*/ /*border-secondary*/ rounded-3 shadow position-relative"
+
+      <ul class="SidebarNav nav-pills nav-stacked /*border border-secondary*/ rounded-3 shadow position-relative"
         id="DynamicMenu">
-        <!-- @{
-                      <partial name="_LoadMenuForUserPartial" />
-                  } -->
       </ul>
+      <div class="container d-flex justify-content-center">
+        <hr class="text-white w-100" />
+      </div>
     </div>
   </div>
 </div>

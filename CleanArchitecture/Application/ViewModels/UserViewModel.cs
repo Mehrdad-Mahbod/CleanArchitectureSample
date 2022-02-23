@@ -1,49 +1,31 @@
-﻿using System;
+﻿using Domain.Models;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
-namespace Domain.Models
+
+namespace Application.ViewModels
 {
-    public class User : BaseEntity
+    public class UserViewModel
     {
+        public int ID { get; set; }
         public byte Gender { get; set; }
         public string Name { get; set; }
         public string Family { get; set; }
-
-        [Required]
-        [MaxLength(250)]
         public string UserName { get; set; }
-
         public string NormalizedUserName { get; set; }
-
-        //[Required]
-        [MaxLength(250)]
-        [EmailAddress]
         public string Email { get; set; }
-
-        [MaxLength(11)]
         public string PhoneNumber { get; set; }
         public bool PhoneNumberConfirmed { get; set; }
-
-        [Required]
-        [MaxLength(250)]
         public string Password { get; set; }
-
         public int CityId { get; set; }
         public int? ParentId { get; set; }
         public byte[] Image { get; set; }
-        [NotMapped]
         public string ImgBase64 { get; set; }
         public bool LockoutEnabled { get; set; }
         public string SecurityStamp { get; set; }
-        [NotMapped]
         public bool RememberMe { get; set; }
-        [ForeignKey("UserId")/*, Required*/]
         public virtual ICollection<UserMenu> UserMenus { get; set; }
         //[ForeignKey("UserId"), Required]
         public virtual ICollection<UserRole> UserRoles { get; set; }
-
+        public IEnumerable<User> Users { get; set; }
     }
 }

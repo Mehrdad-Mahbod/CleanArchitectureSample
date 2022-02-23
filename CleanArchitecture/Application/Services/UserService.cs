@@ -11,40 +11,56 @@ namespace Application.Services
 {
     public class UserService:IUserService
     {
-        private IUserRepository _userRepository;
+        private IUserRepository UserRepository;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository UserRepository)
         {
-            _userRepository = userRepository;
+            this.UserRepository = UserRepository;
         }
 
-        public CheckUser CheckUser(string username, string email)
+        public CheckUser CheckUser(RegisterViewModel RegisterViewModel)
         {
-            bool userNameValid = _userRepository.IsExistUserName(username);
-            bool emailValid = _userRepository.IsExistEmail(email.Trim().ToLower());
+            /*bool UserNameValid = UserRepository.IsExistUserName(RegisterViewModel.UserName);
+            bool EmailValid = UserRepository.IsExistEmail(RegisterViewModel.Email.Trim().ToLower());*/
 
-           
-                
-             if (userNameValid&&emailValid)
+            bool PhoneNumberValid = UserRepository.IsExistPhoneNumber(RegisterViewModel.Name, RegisterViewModel.Family, RegisterViewModel.PhoneNumber);
+            /*
+            if (UserNameValid && EmailValid)
+            {
                 return ViewModels.CheckUser.UserNameAndEmailNotValid;
-            else if (emailValid)
+            }
+            else if (EmailValid)
+            {
                 return ViewModels.CheckUser.EmailNotValid;
-            else if (userNameValid)
-                 return ViewModels.CheckUser.UserNameNotValid;
+            }
+            else if (UserNameValid)
+            {
+                return ViewModels.CheckUser.UserNameNotValid;
+            }
+            */
+
+            if (PhoneNumberValid)
+            {
+                return ViewModels.CheckUser.UserNameNotValid;
+            }
 
             return ViewModels.CheckUser.OK;
         }
 
-        public int RegisterUser(User user)
+        public int RegisterUser(User User)
         {
-           _userRepository.AddUser(user);
-            _userRepository.Save();
-            return user.ID;
+            UserRepository.AddUser(User);
+            UserRepository.Save();
+            return User.ID;
         }
 
         public bool IsExistUser(string email, string password)
         {
-            return _userRepository.IsExistUser(email.Trim().ToLower(), PasswordHelper.EncodePasswordMd5(password));
+            return UserRepository.IsExistUser(email.Trim().ToLower(), PasswordHelper.EncodePasswordMd5(password));
+        }
+        public User SelectUserNameWithPassword(LoginViewModel LoginViewModel)
+        {            
+            return UserRepository.SelectUserNameWithPassword(LoginViewModel.UserName, PasswordHelper.EncodePasswordMd5(LoginViewModel.Password));
         }
     }
 }

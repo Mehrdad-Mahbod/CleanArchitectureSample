@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -7,12 +7,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Infrastructure.Data.Context;
 using Infrastructure.Ioc;
+using System.Reflection;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Asp.NetCoreWithAngular
 {
@@ -49,12 +50,26 @@ namespace Asp.NetCoreWithAngular
                 options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            }).AddCookie(options =>
+            })
+                .AddCookie(options =>
             {
                 options.LoginPath = "/Login";
                 options.LogoutPath = "/Logout";
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(43200);
+            }).
+            AddJwtBearer(options => options.TokenValidationParameters =/*new TokenValidationParameters*/new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = Configuration["Jwt:Value"],      //"http://localhost:5000/",
+                ValidAudience = Configuration["Jwt:Value"],    //"http://localhost:5000/",
+                IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(Configuration["Jwt:MehrdadSecurityKey"])),
+                ClockSkew = TimeSpan.Zero
             });
+
+
 
 
             services.AddDbContext<ApplicationDbContext>(options =>

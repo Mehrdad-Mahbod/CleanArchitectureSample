@@ -3,8 +3,7 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: /*Roboto*/url(assets/Fonts/Yekan.ttf), "Helvetica Neue", sans-serif; }
 
-
-/*SidebarWrapper***********************************************************************************************************************/
+/*SidebarWrapper*****************************************************************************************************************************/
 #SidebarWrapper {
   direction: rtl;
   z-index: 1000;
@@ -80,6 +79,80 @@ body { margin: 0; font-family: /*Roboto*/url(assets/Fonts/Yekan.ttf), "Helvetica
               color: #fff;
               background: none;
           }
+/**********************************************************************************************************************************************/
+ /*Sidebar Styles******************************************************************************************************************************/
+ .sidebar-nav {
+  /*این خط اگر فعال باشد منوهایی که از دیتابیس  فراخوانی می شوند کمی پایینتر قرار می گیرند.*/
+  /*position: absolute;*/
+  top: 0;
+  width: 250px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  margin-top: 2px;
+}
+  .sidebar-nav li {
+    text-indent: 15px;
+    line-height: 40px;
+    /*Add by Mehrdad*/
+    text-align: right;
+  }
+    .sidebar-nav li a {
+      display: block;
+      text-decoration: none;
+      /*color: #999999;*/       
+      /*color: #8c8c8c;*/
+      color: #ffffff;
+      /*Add By Mehrdad*/
+      padding-right: 0%; /*برای این است که وقتی اسکرول شد متن ها از سمت راست فاصله داشته باشند*/
+      /***************/
+      /*Comment By Mehrdad*/
+      /*border: 1px solid #f0f0f0;*/
+      /*box-shadow: 1px 1px 1px #b7b7b7;*/
+      margin-top: 1%;
+      border-radius: 3px;
+    }
+      /*تغییر رنگ منوها*/
+      .sidebar-nav li a:hover {
+       transition:  .3s ;
+        text-decoration: none;
+        /*color: #fff;*/
+        color: #e79600;
+        /*background: rgba(255,255,255,0.2);*/
+        background :#ffffff;
+        border-left: #ffc107 2px solid;  
+        width: auto;       
+      }
+      .sidebar-nav li a:active,
+      .sidebar-nav li a:focus {
+        text-decoration: none;
+      }     
+     /*nav-bar تغییر رنگ آیتم های بالایی*/
+      a.nav-link{
+       color:#ffffff
+     }
+     a.nav-link:hover{
+       transition:.1s;
+       /*color:#fbff00;*/
+       color: #c4e0f1;
+       border: 1px solid #d7ecf3;
+       border-radius: 3px;
+     }
+  .sidebar-nav > .sidebar-brand {
+    height: 65px;
+    font-size: 18px;
+    line-height: 60px;
+  }
+    .sidebar-nav > .sidebar-brand a {
+      color: #999999;
+    }
+      .sidebar-nav > .sidebar-brand a:hover {
+        color: #fff;
+        background: none;
+      }
+/***************************************************************************************************************************************/
+
+
 /*navbar**************************************************************************************************************************************/
 .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
   height: 56px;
@@ -90,12 +163,10 @@ body { margin: 0; font-family: /*Roboto*/url(assets/Fonts/Yekan.ttf), "Helvetica
   opacity: 0;
   z-index: -1;
 }
-
   .bs-canvas-overlay.show {
-    opacity: 0.50;
-    z-index: 1100;
+      opacity: 0.50;
+      z-index: 1100;
   }
-
 .bs-canvas {
   /*Comment By Mehrdad*/
   /*top: 0;*/
@@ -106,11 +177,9 @@ body { margin: 0; font-family: /*Roboto*/url(assets/Fonts/Yekan.ttf), "Helvetica
   overflow-x: hidden;
   overflow-y: hidden;
 }
-
 .bs-canvas-left {
   left: 0;
 }
-
 .bs-canvas-right {
   direction: ltr;
   right: 0;
@@ -124,9 +193,9 @@ body { margin: 0; font-family: /*Roboto*/url(assets/Fonts/Yekan.ttf), "Helvetica
   background: linear-gradient(225deg, #076ea2 0%, #953288 100%);
   /*-------------------------------------------------------------------------------------------------------------------------------------*/
   /*background: #171818;
-    background: -webkit-radial-gradient(top, #171818, #4B4B4B);
-    background: -moz-radial-gradient(top, #171818, #4B4B4B);
-    background: radial-gradient(to bottom, #171818, #4B4B4B);*/
+  background: -webkit-radial-gradient(top, #171818, #4B4B4B);
+  background: -moz-radial-gradient(top, #171818, #4B4B4B);
+  background: radial-gradient(to bottom, #171818, #4B4B4B);*/
   /*-------------------------------------------------------------------------------------------------------------------------------------*/
   /*رنگ اصلی برداشته شده از سایت */
   /*www.w3schools.com/w3css/tryit.asp?filename=tryw3css_sidebar_animate*/
@@ -134,7 +203,6 @@ body { margin: 0; font-family: /*Roboto*/url(assets/Fonts/Yekan.ttf), "Helvetica
   /*رنگ اصلی*/
   background: #333 !important;
 }
-
 .bs-canvas-anim {
   transition: all .4s ease-out;
   -webkit-transition: all .4s ease-out;
@@ -196,3 +264,39 @@ body { margin: 0; font-family: /*Roboto*/url(assets/Fonts/Yekan.ttf), "Helvetica
 }
  
 /************************************************************************************************************************************************/
+/***************************************************************************************/
+.Link {
+  /*height: 30px;
+  padding-top: 4px;*/
+  outline: none;
+  /*font-size: large;
+  font-weight: bold;*/
+  border-radius: 3px;
+  list-style: none;
+  margin: 1px;
+  /*border-bottom: 1px solid rgb(108 108 108/75%);*/
+  /*border-top: 1px solid rgb(255 153 0 / 28%);*/
+  /*border-top: 1px solid rgb(255 153 0);*/
+}
+  .Link:hover {
+      border-radius: 3px;
+  }
+li > a.Link {
+  /*width: 200px;*/
+  width: 240px;
+}
+  /*تغییر رنگ آیکون های منوی سمت راست*/
+  li > a.Link > i {
+      /*color: #ff001b;*/
+      /*color: #fb811b;*/
+      /*color: #f91860;
+      border: 1px solid #f0ff00;*/
+      display: unset;
+      margin-right: 3%;
+  }
+
+.R {
+  border-top:none;
+}
+/*****************************************************************************************/
+

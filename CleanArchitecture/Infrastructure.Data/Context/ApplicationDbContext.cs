@@ -33,7 +33,7 @@ namespace Infrastructure.Data.Context
             // Add your customizations after calling base.OnModelCreating(builder);
             //Install-Package Microsoft.EntityFrameworkCore.Tools -Version 2.1.4
             //Install-Package Microsoft.EntityFrameworkCore.Tools -Version 2.1.8
-
+            DatabaseSeed.Seed(Builder);
         }
 
 

@@ -11,12 +11,14 @@ namespace Domain.Models
 
     public class Role : BaseEntity
     {
+
+        public string Name { get; set; }
+        public string NormalizedName { get; set; }
+        public string ConcurrencyStamp { get; set; }
+
         [ForeignKey("RoleId"), Required]
         public virtual ICollection<RoleMenu> RoleMenus { get; set; }
 
         public virtual ICollection<UserRole> UserRoles { get; set; }
-
-
-
     }
 }

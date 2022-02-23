@@ -5,7 +5,8 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { AppComponent } from '../app.component';
 import { ServerurlService } from './serverurl.service';
 
-import { User } from '../Models/User';
+import { LoginViewModel } from '../ViewModels/Authentication/LoginViewModel';
+import { RegisterViewModel } from '../ViewModels/Authentication/RegisterViewModel';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +15,9 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient, private Serverurl: ServerurlService) { }
 
-  Register(UserInfo: User): Observable<any> {
+  Register(RegisterViewModel: RegisterViewModel): Observable<any> {
     console.log(this.Serverurl.Url + '/Authentication/Register');
-    return this.http.post<any>(this.Serverurl.Url + '/Authentication/Register', UserInfo)
+    return this.http.post<any>(this.Serverurl.Url + '/Authentication/Register', RegisterViewModel)
       .pipe(catchError(this.ErrorHandler));
   }
 
@@ -28,8 +29,8 @@ export class AuthenticationService {
   }
 
 
-  Login(UserInfo: User): Observable<any> {
-    return this.http.post<any>(this.Serverurl.Url + "/Authentication/Login", UserInfo);
+  Login(LoginViewModel: LoginViewModel): Observable<any> {
+    return this.http.post<any>(this.Serverurl.Url + "/Authentication/Login", LoginViewModel);
   }
 
   obtenerToken(): string  {

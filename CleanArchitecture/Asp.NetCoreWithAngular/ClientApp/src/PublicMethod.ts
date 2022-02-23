@@ -66,124 +66,167 @@ export function MainFaunction() {
     overlay: false,
     /*width: '330px'*/
     width: '250px'
- },
-bsMain = $('.bs-offset-main'), bsOverlay = $('.bs-canvas-overlay');
-$('[data-toggle="canvas"][aria-expanded="false"]').on('click', function () {
+  },
+    bsMain = $('.bs-offset-main'), bsOverlay = $('.bs-canvas-overlay');
+  $('[data-toggle="canvas"][aria-expanded="false"]').on('click', function () {
     var canvas = $(this).data('target'),
-        opts = $.extend({}, bsDefaults, $(canvas).data()),
-        prop = $(canvas).hasClass('bs-canvas-right') ? 'margin-right' : 'margin-left';
+      opts = $.extend({}, bsDefaults, $(canvas).data()),
+      prop = $(canvas).hasClass('bs-canvas-right') ? 'margin-right' : 'margin-left';
 
     if (opts.width === '100%')
-        opts.offset = false;
+      opts.offset = false;
 
     $(canvas).css('width', opts.width);
     if (opts.offset && bsMain.length)
-        bsMain.css(prop, opts.width);
+      bsMain.css(prop, opts.width);
 
     $(canvas + ' .bs-canvas-close').attr('aria-expanded', "true");
     $('[data-toggle="canvas"][data-target="' + canvas + '"]').attr('aria-expanded', "true");
     if (opts.overlay && bsOverlay.length)
-        bsOverlay.addClass('show');
+      bsOverlay.addClass('show');
     /*Add By Mehrdad*/
     if ($(canvas).width() == 250 && <any>$(window).width() < 768) {
-        bsOverlay.removeClass('show');
-        $(canvas).css('width', 0);
+      bsOverlay.removeClass('show');
+      $(canvas).css('width', 0);
     }
-    if ($(canvas).width() == 250 &&  <any>$(window).width() > 768) {
-        bsOverlay.removeClass('show');
-        $(canvas).css('width', 50);
+    if ($(canvas).width() == 250 && <any>$(window).width() > 768) {
+      bsOverlay.removeClass('show');
+      $(canvas).css('width', 50);
     }
     if ($(canvas).width() == 0 && <any>$(window).width() < 768) {
-        bsOverlay.removeClass('show');
-        $(canvas).css('width', 250);
+      bsOverlay.removeClass('show');
+      $(canvas).css('width', 250);
 
     }
     /*End By Mehrdad*/
 
     return false;
-});
-$('.bs-canvas-close, .bs-canvas-overlay').on('click', function () {
+  });
+  $('.bs-canvas-close, .bs-canvas-overlay').on('click', function () {
     var canvas, aria;
     if ($(this).hasClass('bs-canvas-close')) {
-        canvas = $(this).closest('.bs-canvas');
-        aria = $(this).add($('[data-toggle="canvas"][data-target="#' + canvas.attr('id') + '"]'));
-        if (bsMain.length)
-            bsMain.css(($(canvas).hasClass('bs-canvas-right') ? 'margin-right' : 'margin-left'), '');
+      canvas = $(this).closest('.bs-canvas');
+      aria = $(this).add($('[data-toggle="canvas"][data-target="#' + canvas.attr('id') + '"]'));
+      if (bsMain.length)
+        bsMain.css(($(canvas).hasClass('bs-canvas-right') ? 'margin-right' : 'margin-left'), '');
     } else {
-        canvas = $('.bs-canvas');
-        aria = $('.bs-canvas-close, [data-toggle="canvas"]');
-        if (bsMain.length)
-            bsMain.css({
-                'margin-left': '',
-                'margin-right': ''
-            });
+      canvas = $('.bs-canvas');
+      aria = $('.bs-canvas-close, [data-toggle="canvas"]');
+      if (bsMain.length)
+        bsMain.css({
+          'margin-left': '',
+          'margin-right': ''
+        });
     }
     if (<any>$(window).width() < 768) {
-        $("#bs-canvas-right").css('width', '0');
+      $("#bs-canvas-right").css('width', '0');
     }
     else {
-        canvas.css('width', '50');
-        //canvas.css('width', '0');
+      canvas.css('width', '50');
+      //canvas.css('width', '0');
     }
     aria.attr('aria-expanded', "false");
     //if (bsOverlay.length)
     bsOverlay.removeClass('show');
     return false;
-});
-$('#SidebarWrapper,#bs-canvas-right').hover(function () {
+  });
+  $('#SidebarWrapper,#bs-canvas-right').hover(function () {
     var canvas = $('#bs-canvas-right'),
-        opts = $.extend({}, bsDefaults, $(canvas).data()),
-        prop = $(canvas).hasClass('bs-canvas-right') ? 'margin-right' : 'margin-left';
+      opts = $.extend({}, bsDefaults, $(canvas).data()),
+      prop = $(canvas).hasClass('bs-canvas-right') ? 'margin-right' : 'margin-left';
 
     if (opts.width === '100%')
-        opts.offset = false;
+      opts.offset = false;
 
     $(canvas).css('width', opts.width);
     if (opts.offset && bsMain.length)
-        bsMain.css(prop, opts.width);
+      bsMain.css(prop, opts.width);
 
     if (opts.overlay && bsOverlay.length)
-        bsOverlay.addClass('show');
+      bsOverlay.addClass('show');
 
     return false;
-}, function () {
+  }, function () {
     var canvas, aria;
     if ($(this).hasClass('bs-canvas-close')) {
-        canvas = $(this).closest('.bs-canvas');
-        aria = $(this).add($('[data-toggle="canvas"][data-target="#' + canvas.attr('id') + '"]'));
-        if (bsMain.length)
-            bsMain.css(($(canvas).hasClass('bs-canvas-right') ? 'margin-right' : 'margin-left'), '');
+      canvas = $(this).closest('.bs-canvas');
+      aria = $(this).add($('[data-toggle="canvas"][data-target="#' + canvas.attr('id') + '"]'));
+      if (bsMain.length)
+        bsMain.css(($(canvas).hasClass('bs-canvas-right') ? 'margin-right' : 'margin-left'), '');
     } else {
-        canvas = $('.bs-canvas');
-        aria = $('.bs-canvas-close, [data-toggle="canvas"]');
-        if (bsMain.length)
-            bsMain.css({
-                'margin-left': '',
-                'margin-right': ''
-            });
-        //Close All Menu After Live Side
-        $('#StaticMenu ul,#DynamicMenu ul').hide(500);
-        $('#StaticMenu ul,#DynamicMenu ul').children('.current').parent().show(500);
+      canvas = $('.bs-canvas');
+      aria = $('.bs-canvas-close, [data-toggle="canvas"]');
+      if (bsMain.length)
+        bsMain.css({
+          'margin-left': '',
+          'margin-right': ''
+        });
+      //Close All Menu After Live Side
+      $('#StaticMenu ul,#DynamicMenu ul').hide(500);
+      $('#StaticMenu ul,#DynamicMenu ul').children('.current').parent().show(500);
     }
     canvas.css('width', '50');
     //canvas.css('width', '0');
     aria.attr('aria-expanded', "false");
     if (bsOverlay.length)
-        bsOverlay.removeClass('show');
+      bsOverlay.removeClass('show');
 
     return false;
-});
-$(window).on("resize", function () {
+  });
+  $(window).on("resize", function () {
     if (<any>$(window).width() < 768) {
-        //$("#bs-canvas-right").css('width', '0');
-        //$("#MainRenderBody").removeClass("ms-5");
+      //$("#bs-canvas-right").css('width', '0');
+      //$("#MainRenderBody").removeClass("ms-5");
 
     }
     else {
-        //$("#bs-canvas-right").css('width', '50');
-        //$("#MainRenderBody").addClass("ms-5");
+      //$("#bs-canvas-right").css('width', '50');
+      //$("#MainRenderBody").addClass("ms-5");
     }
-});
+  });
+
+  $('#StaticMenu ul,#DynamicMenu ul').hide();
+  $('#StaticMenu ul,#DynamicMenu ul').children('.current').parent().show();
+  //$('#menu ul:first').show();
+  $('#StaticMenu li a,#DynamicMenu li a').click(function () {
+    //e.preventDefault();
+
+    var TimeEfect = 500;
+    var checkElement = $(this).next();
+    //console.log($(checkElement));
+    if (checkElement.is(':visible')) {
+      console.log("Close");
+      checkElement.slideUp(TimeEfect);//.animate();
+      checkElement.find('ul:visible').slideUp(TimeEfect);//.animate();
+      /*if ($(this).children().hasClass('fa fa-minus-circle')) {
+          $(this).children().removeClass('fa fa-minus-circle');
+          $(this).children().addClass('fa fa-plus-circle');
+          $(this).addClass('fa fa-plus-circle');
+      }*/
+      (<any>$(this).find("i:last")).switchClass("fa-angle-down", "fa-angle-left", 2, "easeInOutQuad");
+    }
+    else if (!checkElement.is(':visible')) {
+      console.log("Open");
+      (<any>$(this).find("i:last")).switchClass("fa-angle-left", "fa-angle-down", 2, "easeInOutQuad");
+
+      var Parent = $(this).parents('ul').first();
+      Parent.find('ul:visible').slideUp(TimeEfect);//.animate();
+      checkElement.slideDown(TimeEfect);//.animate();
+      $('#Sidebar-Wrapper').animate({ scrollTop: $(this).offset()?.top }, 900);
+      /*if ($(this).children().hasClass('fa fa-plus-circle')) {
+          $(this).children().removeClass('fa fa-plus-circle');
+          $(this).children().addClass('fa fa-minus-circle');
+          $(this).addClass('fa fa-plus-circle');
+      }*/
+      /*برای پاک کردن بردر حالت تودرتو*/
+      $("li ul li").css('border', '0');
+      if (checkElement.length == 0) {//بستن اسلایدر
+        $("#bs-canvas-right").css('width', '50');
+        $("#StaticMenu li,#DynamicMenu li").children('ul').hide(200);
+      }
+    }
+    //e.stopPropagation();
+  });
 
 
 
@@ -334,37 +377,105 @@ export function CreateNestedData(data: any) {
 }
 
 export var CreateUL = function (Ul: any, Items: any) {
+  /*
+    $.each(Items, function (I, J) {
+      console.log(Items);
+      if (J != null) {
+  
+  
+        let li = $("<li style='list-style: none;' >" +
+          "<a class='Link' href='JavaScript:void(0)' data-url='" + this.Component + "' data-ParentId='" + this.ParentId + "' >" +
+          "<b class='fa fa-chevron-circle-down' style='width:auto;float: right;line-height:unset;'></b> " + " " +
+          "<b class='" + this.Icon + "' style='width:auto;float: left;line-height:unset;'></b> " + " " +
+          " " + this.Name + " " +
+          //"<span class='badge pull-left'>0</span>" +
+          "</a>" +
+          "</li>");
+        li.appendTo(Ul);
+        if (this.Items && this.Items.length > 0) {
+          var ul = $("<ul></ul>");
+          ul.css({ 'width': 'auto', 'margin-right': '5px', 'margin-left': '-30px', 'direction': 'ltr' });
+          ul.appendTo(li);
+          //$("li>ul>li>a.Link").css({ 'width': '240px', 'float': 'right' });
+          CreateUL(ul, this.Items);
+        }
+      }
+    });
+    */
+  /*
+کد قدیمی که درست کار می کرد
+$.each(Items, function () {
+    if (this.Name) {
+        li = $("<li style='list-style: none;' >" +
+            "<a class='Link' href='javascript:void(0)' data-url='" + this.Controller + '/' + this.Action + "' data-ParentId='" + this.ParentID + "' >" +
+            "<b class='" + this.Icon + "' style='width:auto;margin:0 0 0 1%'></b> " + " " +
+            " " + this.Name + " " +
+            "<span class='badge pull-left'>0</span>" +
+            "</a>" +
+            "</li>");
+        li.appendTo(parent);
+        if (this.Items && this.Items.length > 0) {
+            var ul = $("<ul></ul>");
+            ul.appendTo(li);
+            CreateUL(ul, this.Items);
+        }
+    }
+});
+خودم نوشتم
+*/
   $.each(Items, function (I, J) {
     if (J != null) {
-      let li = $("<li style='list-style: none;' >" +
-        "<a class='Link' href='JavaScript:void(0)' data-url='" + this.Component + "' data-ParentId='" + this.ParentId + "' >" +
-        "<b class='" + this.Icon + "' style='width:auto;float: left;line-height:unset;'></b> " + " " +
-        " " + this.Name + " " +
-        //"<span class='badge pull-left'>0</span>" +
-        "</a>" +
-        "</li>");
+      //<li>
+      //    <a href="#"><i class="fa fa-cart-plus"></i><span class="ms-5">Events</span></a>
+      //</li>
+      //li = $("<li style='list-style: none;' >" +
+      //    "<a class='Link' href='javascript:void(0)' data-url='" + this.Controller + '/' + this.Action + "' data-ParentId='" + this.ParentID + "' >" +
+      //    "<b class='" + this.Icon + "' style='width:auto;margin:0 0 0 1%'></b> " + " " +
+      //    " " + this.Name + " " +
+      //    /*"<span class='badge pull-left'>0</span>" +*/
+      //    "</a>" +
+      //    "</li>");
+      let li;
+      if (this.ParentID == null) {
+        li = $("<li style='list-style: none;' class='rounded bg-dark bg-gradient text-white'>" +
+          "<a class='Link' href='javascript:void(0)' data-url='" + this.Component + "' data-ParentId='" + this.ParentID + "' >" +
+          "<i class='" + this.Icon + "'></i><span class=ms-2>" + this.Name + "</span> " +
+          "<i class='fa fa-angle-left' style='position: relative;right: 50%;'></i>" +
+          "</a>" +
+          "</li>");
+      }
+      else {
+        li = $("<li style='list-style: none;' class='rounded bg-dark bg-gradient'>" +
+          "<a class='Link' href='javascript:void(0)' data-url='" + this.Component + "' data-ParentId='" + this.ParentID + "' >" +
+          "<i class='" + this.Icon + "'></i><span class=ms-2>" + this.Name + "</span> " +
+          "</a>" +
+          "</li>");
+      }
       li.appendTo(Ul);
       if (this.Items && this.Items.length > 0) {
-        var ul = $("<ul></ul>");
-        ul.css({ 'width': 'auto', 'margin-right': '5px', 'margin-left': '-30px', 'direction': 'ltr' });
+        var ul = $("<ul class=''></ul>");
+        ul.addClass('nav-pills');
+        ul.addClass('nav-stacked');
+        ul.addClass('pe-3');
+        //ul.css({ 'width': 'auto', 'margin-right': '5px', 'margin-left': '-30px', 'direction': 'ltr' });
         ul.appendTo(li);
-        //$("li>ul>li>a.Link").css({ 'width': '240px', 'float': 'right' });
+        /*$("li>ul>li>a.Link").css({ 'width': '240px', 'float': 'right' });*/
         CreateUL(ul, this.Items);
       }
     }
   });
+
+
 }
 
 
-export function IsLoggedIn() : boolean {
+export function IsLoggedIn(): boolean {
   let LocalStorageToken = localStorage.getItem('token');
-  if(LocalStorageToken == null)
-  {
-    
+  if (LocalStorageToken == null) {
+
     return false;
   }
-  else
-  {
+  else {
     return true;
   }
 }

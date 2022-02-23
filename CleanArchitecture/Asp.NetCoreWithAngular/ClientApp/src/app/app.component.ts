@@ -5,7 +5,7 @@ import { AuthenticationService } from './Services/authentication.service';
 import { DataTransferService } from './Services/datatransfer.service';
 import { ServerurlService } from './Services/serverurl.service';
 
-import { UserRole } from './Models/UserRole';
+import { UserRole } from './ViewModels/UserRole';
 
 import * as MyPublicMethod from '../PublicMethod';
 
@@ -69,6 +69,7 @@ export class AppComponent implements OnInit {
       this.UserRole.UserId = this.InfoTokenData.UserID;
       this.UserRole.RoleId = this.InfoTokenData.RoleID;
 
+      
       this.http.post<any>(this.Serverurl.Url + '/Menu/GetAllUserRoleMenu', this.UserRole).subscribe(Data => {
         var Self = this;
         var ul = $("<ul class='sidebar-nav' style='top: 30%;'></ul>");
@@ -76,7 +77,12 @@ export class AppComponent implements OnInit {
 
         var source = MyPublicMethod.CreateNestedData(Data);
         MyPublicMethod.CreateUL(ul, source);
-        $(ul).appendTo("#sidebar-wrapper").insertAfter("#StaticMenu");
+        /*$(ul).appendTo("#sidebar-wrapper").insertAfter("#StaticMenu");*/
+        $(ul).appendTo("#SidebarWrapper").insertAfter("#StaticMenu");
+        
+
+        console.log(Data);
+
         MyPublicMethod.MyCollapsechildrenHide();
         MyPublicMethod.OpenMenuDataBase();
 
@@ -107,6 +113,7 @@ export class AppComponent implements OnInit {
       },
         (error) => { alert(JSON.stringify(error)) }
       );
+      
 
       this.Dt.GetData().subscribe((Message) => {
         console.log("From DataTransfer:" + Message);
