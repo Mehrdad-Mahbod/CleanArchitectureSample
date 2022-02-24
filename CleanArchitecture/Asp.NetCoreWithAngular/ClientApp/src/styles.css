@@ -38,6 +38,7 @@ body { margin: 0; font-family: /*Roboto*/url(assets/Fonts/Yekan.ttf), "Helvetica
       line-height: 40px;
       /*Add by Mehrdad*/
       text-align: right;
+      width: 250px;
   }
       .SidebarNav li a {
           display: block;
@@ -117,10 +118,10 @@ body { margin: 0; font-family: /*Roboto*/url(assets/Fonts/Yekan.ttf), "Helvetica
        transition:  .3s ;
         text-decoration: none;
         /*color: #fff;*/
-        color: #e79600;
+        color: #757575;
         /*background: rgba(255,255,255,0.2);*/
-        background :#ffffff;
-        border-left: #ffc107 2px solid;  
+        background :#ece8e8;
+        /*border-left: #ffc107 2px solid;*/  
         width: auto;       
       }
       .sidebar-nav li a:active,

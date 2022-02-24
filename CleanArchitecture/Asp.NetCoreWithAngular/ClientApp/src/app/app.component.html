@@ -15,7 +15,6 @@
       <div class="collapse navbar-collapse" id="NavbarToggler">
         <ul class="navbar-nav flex-grow-1">
           <li class="nav-item">
-
             <a routerLink="/" class="nav-link" href="#">
               <i class="fa fa-home fa-lg"></i>
               خانه
@@ -81,44 +80,49 @@
       </div>
     </div>
   </header>
-  <div class="container d-flex justify-content-center">
-    <hr class="text-white w-100" />
-  </div>
+
+  <hr class="text-white w-75 mx-auto" />
+
 
   <div class="bs-canvas-content px-3 /*py-5*/">
     <div id="SidebarWrapper">
       <ul class="SidebarNav nav-pills nav-stacked /*borderborder-secondary*/ rounded-3 shadow position-relative"
         id="StaticMenu">
-
         <li>
-          <a href="javascript:void(0)">
+          <a href="javascript:void(0)" routerLink="/" class="">
             <span class="btn-group-toggle">
               <i class="fa fa-tachometer"></i>
             </span>
-            خانه
+            <span class="ms-3">
+              خانه
+            </span>
+
           </a>
         </li>
         <li>
           <a href="javascript:void(0)">
             <span class="btn-group-toggle">
-              <i class="fa fa-smile-o"></i>
+              <i class="fa fa-smile-o fa-lg"></i>
             </span>
-            درباره ما
+            <span class="ms-3">
+              درباره ما
+            </span>
           </a>
-        </li>
-        <li>
-          <hr class="text-white w-75 ms-4" />
         </li>
       </ul>
 
       <ul class="SidebarNav nav-pills nav-stacked /*border border-secondary*/ rounded-3 shadow position-relative"
         id="DynamicMenu">
       </ul>
-      <div class="container d-flex justify-content-center">
-        <hr class="text-white w-100" />
-      </div>
+
     </div>
+
   </div>
+
+
+
+
+
 </div>
 
 <div class="container-fluid position-relative">

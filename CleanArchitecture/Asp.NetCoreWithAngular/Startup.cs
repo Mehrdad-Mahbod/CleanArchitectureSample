@@ -63,8 +63,8 @@ namespace Asp.NetCoreWithAngular
                 ValidateAudience = true,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                ValidIssuer = Configuration["Jwt:Value"],      //"http://localhost:5000/",
-                ValidAudience = Configuration["Jwt:Value"],    //"http://localhost:5000/",
+                ValidIssuer = Configuration["Jwt:Value"],//"http://localhost:5000/",
+                ValidAudience = Configuration["Jwt:Value"], //"http://localhost:5000/",
                 IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(Configuration["Jwt:MehrdadSecurityKey"])),
                 ClockSkew = TimeSpan.Zero
             });

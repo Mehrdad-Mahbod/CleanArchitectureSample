@@ -4,26 +4,6 @@ import * as $ from "jquery";
 export function MainFaunction() {
   $("#MyCollapse li").children('ul').hide();
 
-  $("#sidebar-wrapper").hover(function () {
-    if ($("#wrapper").hasClass('DivWrapper')) {
-      $("#wrapper").toggleClass("DivWrapper");
-      $("#MyCollapse li").children('ul').hide(200);
-    }
-    else if (!$("#wrapper").hasClass('DivWrapper')) {
-
-    }
-  },
-    function () {
-      /*هنگامی که از هاور خارج میس شویم ساید بار را می بندد*/
-      if (!$("#wrapper").hasClass('DivWrapper')) {
-        $("#wrapper").addClass("DivWrapper");
-        $("#MyCollapse li").children('ul').hide(500);
-      }
-      else {
-        //$("#wrapper").toggleClass("DivWrapper");
-      }
-    });
-
   //$("#BtnMainMenu").click(function (e) {
   $("#BtnMainMenu").on('click', function (e) {
     //e.preventDefault();
@@ -164,6 +144,7 @@ export function MainFaunction() {
       //Close All Menu After Live Side
       $('#StaticMenu ul,#DynamicMenu ul').hide(500);
       $('#StaticMenu ul,#DynamicMenu ul').children('.current').parent().show(500);
+      $("#MyCollapse li").children('ul').hide(500);        
     }
     canvas.css('width', '50');
     //canvas.css('width', '0');
@@ -212,7 +193,7 @@ export function MainFaunction() {
       var Parent = $(this).parents('ul').first();
       Parent.find('ul:visible').slideUp(TimeEfect);//.animate();
       checkElement.slideDown(TimeEfect);//.animate();
-      $('#Sidebar-Wrapper').animate({ scrollTop: $(this).offset()?.top }, 900);
+      $('#SidebarWrapper').animate({ scrollTop: $(this).offset()?.top }, 900);
       /*if ($(this).children().hasClass('fa fa-plus-circle')) {
           $(this).children().removeClass('fa fa-plus-circle');
           $(this).children().addClass('fa fa-minus-circle');
@@ -227,11 +208,6 @@ export function MainFaunction() {
     }
     //e.stopPropagation();
   });
-
-
-
-
-
 }
 
 export function MyCollapsechildrenHide() {
@@ -257,7 +233,7 @@ export function OpenMenuDataBase() {
       var Parent = $(this).parents('ul').first();
       Parent.find('ul:visible').slideUp(TimeEfect);//.animate();
       checkElement.slideDown(TimeEfect);//.animate();
-      $('#Sidebar-Wrapper').animate({ scrollTop: $(this).offset()?.top }, 900);
+      $('#SidebarWrapper').animate({ scrollTop: $(this).offset()?.top }, 900);
 
       /*if ($(this).children().hasClass('fa fa-plus-circle')) {
           $(this).children().removeClass('fa fa-plus-circle');
@@ -423,6 +399,7 @@ $.each(Items, function () {
 });
 خودم نوشتم
 */
+
   $.each(Items, function (I, J) {
     if (J != null) {
       //<li>
@@ -440,7 +417,9 @@ $.each(Items, function () {
         li = $("<li style='list-style: none;' class='rounded bg-dark bg-gradient text-white'>" +
           "<a class='Link' href='javascript:void(0)' data-url='" + this.Component + "' data-ParentId='" + this.ParentID + "' >" +
           "<i class='" + this.Icon + "'></i><span class=ms-2>" + this.Name + "</span> " +
-          "<i class='fa fa-angle-left' style='position: relative;right: 50%;'></i>" +
+          "<div class='pull-left me-2'>"+
+          "<i class='fa fa-angle-left'></i>"+
+          "</div>"+
           "</a>" +
           "</li>");
       }
@@ -467,7 +446,6 @@ $.each(Items, function () {
 
 
 }
-
 
 export function IsLoggedIn(): boolean {
   let LocalStorageToken = localStorage.getItem('token');

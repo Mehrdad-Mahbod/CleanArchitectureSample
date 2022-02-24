@@ -77,8 +77,7 @@ export class AppComponent implements OnInit {
 
         var source = MyPublicMethod.CreateNestedData(Data);
         MyPublicMethod.CreateUL(ul, source);
-        /*$(ul).appendTo("#sidebar-wrapper").insertAfter("#StaticMenu");*/
-        $(ul).appendTo("#SidebarWrapper").insertAfter("#StaticMenu");
+        $(ul).appendTo("#SidebarWrapper").insertAfter("#BetWeenMenu");
         
 
         console.log(Data);
@@ -99,14 +98,6 @@ export class AppComponent implements OnInit {
           if (Component != 'null') { //اگر زیر منو باشد
             Self.GotoLink(Component);
             $("#MyCollapse li").children('ul').hide();
-            /*سایدبار را می بندد*/
-            if (!$("#wrapper").hasClass('DivWrapper')) {
-              $("#wrapper").addClass("DivWrapper");
-            }
-            /*برای وقتی هست صفحه به حالت کولاپس قرار دارد*/
-            if ($("#wrapper").hasClass('toggled')) {
-              $("#wrapper").removeClass("toggled");
-            }
           }
         });
 
@@ -145,9 +136,6 @@ export class AppComponent implements OnInit {
       $('.nav-link').on('click', function () {
         if ($('.navbar-collapse.collapse.show').hasClass('show')) {
           $('.navbar-collapse.collapse.show').removeClass('show');
-          //ساید بار را باز و بسته می کند
-          //چون اینجا فعلا به درد نمی خورد کامنت کردم
-          //$("#wrapper").toggleClass("toggled");
         }
       })
 
@@ -160,7 +148,6 @@ export class AppComponent implements OnInit {
 
       /*نمایش نام کاربر*/
       if (this.InfoTokenData != undefined) {
-
         $("#UserName").html(" " + this.InfoTokenData.family_name + " ");
       }
     });
@@ -187,7 +174,7 @@ export class AppComponent implements OnInit {
 
       var source = MyPublicMethod.CreateNestedData(Data);
       MyPublicMethod.CreateUL(ul, source);
-      $(ul).appendTo("#sidebar-wrapper").insertAfter("#StaticMenu");
+      $(ul).appendTo("#SidebarWrapper").insertAfter("#StaticMenu");
       MyPublicMethod.MyCollapsechildrenHide();
       MyPublicMethod.OpenMenuDataBase();
 
@@ -204,14 +191,6 @@ export class AppComponent implements OnInit {
         if (Component != 'null') { //اگر زیر منو باشد
           Self.GotoLink(Component);
           $("#MyCollapse li").children('ul').hide();
-          /*سایدبار را می بندد*/
-          if (!$("#wrapper").hasClass('DivWrapper')) {
-            $("#wrapper").addClass("DivWrapper");
-          }
-          /*برای وقتی هست صفحه به حالت کولاپس قرار دارد*/
-          if ($("#wrapper").hasClass('toggled')) {
-            $("#wrapper").removeClass("toggled");
-          }
         }
       });
     },

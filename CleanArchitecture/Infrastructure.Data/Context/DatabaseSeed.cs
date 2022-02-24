@@ -127,7 +127,8 @@ namespace Infrastructure.Data.Context
                     ParentId =  1,
                     Name="ویرایش مشخصات",
                     Component ="Account",
-                    Icon ="fas fa-user-edit",
+                    //Icon ="fa fa-pencil-square-o",
+                    Icon ="fa fa-male",                    
                     IsSelective = true,
                 },
                 new Menu()
@@ -143,7 +144,7 @@ namespace Infrastructure.Data.Context
                 {
                     ID=4,
                     ParentId =  null,
-                    Name="تعاریف",
+                    Name="تعاریف حسابداری",
                     Component =null,
                     Icon ="fa fa-chevron-circle-down",
                     IsSelective = true,
@@ -152,22 +153,22 @@ namespace Infrastructure.Data.Context
                 {
                     ID=5,
                     ParentId = 4 ,
-                    Name="نوع کالا",
+                    Name="کل",
                     //Controller = "TypeOfGoods",
                     //Action = "Index",
-                    //Component ="PatientVisit",
-                    Icon ="fas fa-text-height",
+                    Component ="GeneralOffice",
+                    Icon ="fa fa-book",
                     IsSelective = true,
                 },
                 new Menu()
                 {
                     ID=6,
                     ParentId = 4 ,
-                    Name="ویژگی",
-                    Component ="RegistrationDoctorDrugs",
+                    Name="معین",
+                    Component ="DefiniteOffice",
                     //Controller = "Feature",
                     //Action = "Index",
-                    Icon ="fas fa-cogs",
+                    Icon ="fa fa-sticky-note-o",
                     IsSelective = true,
                 }
             };
@@ -200,12 +201,6 @@ namespace Infrastructure.Data.Context
                   RoleId=1,
                   MenuId =4
               },
-              new RoleMenu()
-              {
-                  ID =5,
-                  RoleId=1,
-                  MenuId =5
-              },
               //Programmer Role
               /***************/
             };
@@ -217,7 +212,7 @@ namespace Infrastructure.Data.Context
               {
                   ID=1,
                   UserId=1,
-                  MenuId =6,
+                  MenuId =5,
                   RegisteredUserId = 1
               },
             };

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Infrastructure.Data.Migrations
+namespace Infrastructure.Data.Data.Migrations
 {
     public partial class InitDb : Migration
     {
@@ -206,11 +206,11 @@ namespace Infrastructure.Data.Migrations
                 values: new object[,]
                 {
                     { 1, null, "fa fa-chevron-circle-down", true, "پروفایل", null },
-                    { 2, "Account", "fas fa-user-edit", true, "ویرایش مشخصات", (byte)1 },
+                    { 2, "Account", "fa fa-male", true, "ویرایش مشخصات", (byte)1 },
                     { 3, null, "fas fa-cogs", true, "تنظیمات", (byte)1 },
-                    { 4, null, "fa fa-chevron-circle-down", true, "تعاریف", null },
-                    { 5, null, "fas fa-text-height", true, "نوع کالا", (byte)4 },
-                    { 6, "RegistrationDoctorDrugs", "fas fa-cogs", true, "ویژگی", (byte)4 }
+                    { 4, null, "fa fa-chevron-circle-down", true, "تعاریف حسابداری", null },
+                    { 5, "GeneralOffice", "fa fa-book", true, "کل", (byte)4 },
+                    { 6, "DefiniteOffice", "fa fa-sticky-note-o", true, "معین", (byte)4 }
                 });
 
             migrationBuilder.InsertData(
@@ -256,10 +256,10 @@ namespace Infrastructure.Data.Migrations
                 columns: new[] { "ID", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 2, "c671e682-f201-43f6-819d-6b28b28c791f", "فروشنده", "فروشنده" },
-                    { 3, "f7ff1e2e-4fe6-4567-812a-9f5e1998e9eb", "خریدار", "خریدار" },
-                    { 1, "1088ebbc-ce02-4c11-aff8-b687126d54ce", "مدیر سیستم", "مدیر سیستم" },
-                    { 4, "fb6d8543-fd01-4998-8cfe-bff87bebf849", "بازاریاب", "بازاریاب" }
+                    { 2, "49281c4d-7294-4192-9228-9542b0cfe94e", "فروشنده", "فروشنده" },
+                    { 3, "a5adcc01-7caa-41dc-9aa4-764c9e7168de", "خریدار", "خریدار" },
+                    { 1, "f9d60d20-7da3-427f-9d89-582a7c4d627e", "مدیر سیستم", "مدیر سیستم" },
+                    { 4, "e4635653-eb5a-492d-a1b8-a26e6c802a21", "بازاریاب", "بازاریاب" }
                 });
 
             migrationBuilder.InsertData(
@@ -581,7 +581,7 @@ namespace Infrastructure.Data.Migrations
                     { 85, "اسلام شهر", 8 },
                     { 84, "گناوه", 7 },
                     { 95, "اردل", 9 },
-                    { 297, "تاكستان", 18 },
+                    { 108, "برد سكن", 11 },
                     { 55, "فریدن", 4 },
                     { 53, "شهر رضا", 4 },
                     { 24, "تكاب", 2 },
@@ -643,8 +643,8 @@ namespace Infrastructure.Data.Migrations
                     { 30, "ماكو", 2 },
                     { 29, "شاهین دژ", 2 },
                     { 40, "مشگین", 3 },
+                    { 297, "تاكستان", 18 },
                     { 109, "بجستان", 11 },
-                    { 108, "برد سكن", 11 },
                     { 111, "تحت جلگه", 11 },
                     { 189, "خرم بید", 17 },
                     { 188, "جهرم", 17 },
@@ -675,7 +675,7 @@ namespace Infrastructure.Data.Migrations
                     { 170, "مهدی شهر", 15 },
                     { 169, "گرمسار", 15 },
                     { 168, "شاهرود", 15 },
-                    { 110, "تایباد", 11 },
+                    { 167, "سمنان", 15 },
                     { 190, "خنج", 17 },
                     { 191, "داراب", 17 },
                     { 192, "زرین دشت", 17 },
@@ -691,7 +691,7 @@ namespace Infrastructure.Data.Migrations
                     { 292, "مهر", 17 },
                     { 291, "ممسنی", 17 },
                     { 290, "مرودشت", 17 },
-                    { 166, "دامغان", 15 },
+                    { 110, "تایباد", 11 },
                     { 289, "لامرد", 17 },
                     { 204, "مهر", 17 },
                     { 203, "ممسنی", 17 },
@@ -713,7 +713,7 @@ namespace Infrastructure.Data.Migrations
                     { 194, "شیراز", 17 },
                     { 205, "نی ریز", 17 },
                     { 165, "ماه نشان", 14 },
-                    { 167, "سمنان", 15 },
+                    { 166, "دامغان", 15 },
                     { 163, "زنجان", 14 },
                     { 134, "بجنورد", 12 },
                     { 133, "اسفراین", 12 },
@@ -758,22 +758,22 @@ namespace Infrastructure.Data.Migrations
                 values: new object[,]
                 {
                     { 154, "شوشتر", 13 },
-                    { 137, "فاروج", 12 },
-                    { 152, "شادگان", 13 },
-                    { 151, "رامهرمز", 13 },
                     { 153, "شوش", 13 },
+                    { 137, "فاروج", 12 },
+                    { 151, "رامهرمز", 13 },
+                    { 152, "شادگان", 13 },
                     { 149, "دشت آزادگان", 13 },
-                    { 139, "آبادان", 13 },
-                    { 140, "امیدیه", 13 },
-                    { 150, "رامشیر", 13 },
-                    { 142, "اهواز", 13 },
-                    { 143, "ایذه", 13 },
-                    { 141, "اندیمشك", 13 },
-                    { 145, "بندرماهشهر", 13 },
-                    { 146, "بهبهان", 13 },
-                    { 147, "خرمشهر", 13 },
                     { 148, "دزفول", 13 },
-                    { 144, "باغ ملك", 13 }
+                    { 147, "خرمشهر", 13 },
+                    { 146, "بهبهان", 13 },
+                    { 145, "بندرماهشهر", 13 },
+                    { 144, "باغ ملك", 13 },
+                    { 143, "ایذه", 13 },
+                    { 142, "اهواز", 13 },
+                    { 141, "اندیمشك", 13 },
+                    { 140, "امیدیه", 13 },
+                    { 139, "آبادان", 13 },
+                    { 150, "رامشیر", 13 }
                 });
 
             migrationBuilder.InsertData(
@@ -781,11 +781,10 @@ namespace Infrastructure.Data.Migrations
                 columns: new[] { "ID", "MenuId", "RoleId" },
                 values: new object[,]
                 {
-                    { 4, 4, 1 },
+                    { 3, 3, 1 },
                     { 1, 1, 1 },
                     { 2, 2, 1 },
-                    { 3, 3, 1 },
-                    { 5, 5, 1 }
+                    { 4, 4, 1 }
                 });
 
             migrationBuilder.CreateIndex(

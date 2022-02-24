@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Infrastructure.Data.Migrations
+namespace Infrastructure.Data.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220220212143_InitDb")]
+    [Migration("20220223133747_InitDb")]
     partial class InitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -3162,7 +3162,7 @@ namespace Infrastructure.Data.Migrations
                         {
                             ID = 2,
                             Component = "Account",
-                            Icon = "fas fa-user-edit",
+                            Icon = "fa fa-male",
                             IsDeleted = false,
                             IsSelective = true,
                             Name = "ویرایش مشخصات",
@@ -3183,25 +3183,26 @@ namespace Infrastructure.Data.Migrations
                             Icon = "fa fa-chevron-circle-down",
                             IsDeleted = false,
                             IsSelective = true,
-                            Name = "تعاریف"
+                            Name = "تعاریف حسابداری"
                         },
                         new
                         {
                             ID = 5,
-                            Icon = "fas fa-text-height",
+                            Component = "GeneralOffice",
+                            Icon = "fa fa-book",
                             IsDeleted = false,
                             IsSelective = true,
-                            Name = "نوع کالا",
+                            Name = "کل",
                             ParentId = (byte)4
                         },
                         new
                         {
                             ID = 6,
-                            Component = "RegistrationDoctorDrugs",
-                            Icon = "fas fa-cogs",
+                            Component = "DefiniteOffice",
+                            Icon = "fa fa-sticky-note-o",
                             IsDeleted = false,
                             IsSelective = true,
-                            Name = "ویژگی",
+                            Name = "معین",
                             ParentId = (byte)4
                         });
                 });
@@ -3487,7 +3488,7 @@ namespace Infrastructure.Data.Migrations
                         new
                         {
                             ID = 1,
-                            ConcurrencyStamp = "1088ebbc-ce02-4c11-aff8-b687126d54ce",
+                            ConcurrencyStamp = "f9d60d20-7da3-427f-9d89-582a7c4d627e",
                             IsDeleted = false,
                             Name = "مدیر سیستم",
                             NormalizedName = "مدیر سیستم"
@@ -3495,7 +3496,7 @@ namespace Infrastructure.Data.Migrations
                         new
                         {
                             ID = 2,
-                            ConcurrencyStamp = "c671e682-f201-43f6-819d-6b28b28c791f",
+                            ConcurrencyStamp = "49281c4d-7294-4192-9228-9542b0cfe94e",
                             IsDeleted = false,
                             Name = "فروشنده",
                             NormalizedName = "فروشنده"
@@ -3503,7 +3504,7 @@ namespace Infrastructure.Data.Migrations
                         new
                         {
                             ID = 3,
-                            ConcurrencyStamp = "f7ff1e2e-4fe6-4567-812a-9f5e1998e9eb",
+                            ConcurrencyStamp = "a5adcc01-7caa-41dc-9aa4-764c9e7168de",
                             IsDeleted = false,
                             Name = "خریدار",
                             NormalizedName = "خریدار"
@@ -3511,7 +3512,7 @@ namespace Infrastructure.Data.Migrations
                         new
                         {
                             ID = 4,
-                            ConcurrencyStamp = "fb6d8543-fd01-4998-8cfe-bff87bebf849",
+                            ConcurrencyStamp = "e4635653-eb5a-492d-a1b8-a26e6c802a21",
                             IsDeleted = false,
                             Name = "بازاریاب",
                             NormalizedName = "بازاریاب"
@@ -3576,13 +3577,6 @@ namespace Infrastructure.Data.Migrations
                             ID = 4,
                             IsDeleted = false,
                             MenuId = 4,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            ID = 5,
-                            IsDeleted = false,
-                            MenuId = 5,
                             RoleId = 1
                         });
                 });

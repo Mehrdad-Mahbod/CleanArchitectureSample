@@ -16,13 +16,17 @@ import { AuthenticationService } from './Services/authentication.service';
 import { AuthguardService } from './Services/authguard.service';
 import { ServerurlService } from './Services/serverurl.service';
 import { SharedModule } from './shared/shared.module';
+import { GeneralofficeComponent } from './generaloffice/generaloffice.component';
+import { DefiniteofficeComponent } from './definiteoffice/definiteoffice.component';
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'Home', component: HomeComponent },
   { path: 'Register', component: RegisterComponent,/*canActivate: [AuthGuardService]*/ },
   { path: 'Login', component: LoginComponent },
-  /*{ path: 'Customer', component: CustomerComponent, canActivate: [AuthguardService] },*/
+  { path: 'GeneralOffice', component: GeneralofficeComponent, canActivate: [AuthguardService] },
+  { path: 'DefiniteOffice', component: DefiniteofficeComponent, canActivate: [AuthguardService] },
 ]
 
 
@@ -32,7 +36,9 @@ const routes: Routes = [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    GeneralofficeComponent,
+    DefiniteofficeComponent,
   ],
   imports: [
     BrowserModule,
