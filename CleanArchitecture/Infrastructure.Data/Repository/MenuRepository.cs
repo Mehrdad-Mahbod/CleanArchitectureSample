@@ -1,11 +1,12 @@
-﻿using Domain.Interfaces;
-using Domain.Models;
-using Infrastructure.Data.Context;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dapper;
+using Domain.Interfaces;
+using Domain.Models;
+using Infrastructure.Data.Context;
 
 namespace Infrastructure.Data.Repository
 {
@@ -31,6 +32,11 @@ namespace Infrastructure.Data.Repository
             {
                 try
                 {
+
+                    /*AdoNet.BaseClass Bc = AdoNet.BaseClass.bclass();
+                    Bc.Begin();
+                    MenuLists = Bc.Con.Query<Menu>("Select * From Menus",null,Bc.Tr).ToList();
+                    Bc.End();*/
 
 
                     MenuLists = (from M in AppDbContext.Menus
