@@ -4,9 +4,8 @@ using System.Collections.Generic;
 
 namespace Application.ViewModels
 {
-    public class UserViewModel
+    public class UserViewModel:BaseViewModel
     {
-        public int ID { get; set; }
         public byte Gender { get; set; }
         public string Name { get; set; }
         public string Family { get; set; }

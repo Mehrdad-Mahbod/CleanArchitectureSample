@@ -24,26 +24,12 @@ export class AppComponent implements OnInit {
 
 
   constructor(public router: Router, private http: HttpClient,
-    /*private route: ActivatedRoute, 
-    private ngZone: NgZone,*/
     private authenticationService: AuthenticationService,
     private Serverurl: ServerurlService, private Dt: DataTransferService) {
-    //this.Dt.GetData().subscribe((Message) => {
-    //  $("#UserName").html(Message);
-    //});
   }
 
 
   GotoLink(St: string): void {
-    /*this.ngZone.run(() => {
-      /*if(St=="AddSingleVisa")
-      {
-        window.location.reload();
-      }      
-      this.router.navigate(['/' + St + '']);
-    });*/
-
-    console.log("GotoLink");
     this.router.navigateByUrl("./");
     //this.router.navigate(['/Home']);
     this.router.navigate(['/' + St + '']);
@@ -92,9 +78,6 @@ export class AppComponent implements OnInit {
           var Component = UrArray[0];
           var Ur = "/" + $(this).attr('data-url');
           var ParentID = $(this).attr('data-ParentId');
-          //console.log('Con:' + Component + "|||" + 'Ur:' + Ur + "|||" + "ParentID:" + ParentID);
-          //alert('Con:' + Component + "|||" + 'Ur:' + Ur + "|||" + "ParentID:" + ParentID);          
-          console.log(typeof (Component) + "//" + Component);
           if (Component != 'null') { //اگر زیر منو باشد
             Self.GotoLink(Component);
             $("#MyCollapse li").children('ul').hide();
@@ -110,12 +93,6 @@ export class AppComponent implements OnInit {
         console.log("From DataTransfer:" + Message);
         //$("#UserName").html(Message);
       });
-
-
-
-
-      //this.LogIn();
-
 
     }
     /**********Start Jquery***********/
@@ -139,7 +116,6 @@ export class AppComponent implements OnInit {
         }
       })
 
-
       const LocalToken = localStorage.getItem('token');
       if (LocalToken != null) {
         const TokenData = Self.JwtHelper.urlBase64Decode(LocalToken.split('.')[1]);
@@ -155,9 +131,7 @@ export class AppComponent implements OnInit {
   }
 
   LogIn() {
-    var Self = this;
-    //var InfoTokenData :any;
-    //alert('شما وارد شده اید');     
+    var Self = this;  
 
     const LocalToken = localStorage.getItem('token');
     const TokenData = this.JwtHelper.urlBase64Decode(LocalToken!.split('.')[1]);
@@ -185,9 +159,7 @@ export class AppComponent implements OnInit {
         var Component = UrArray![0];
         var Ur = "/" + $(this).attr('data-url');
         var ParentID = $(this).attr('data-ParentId');
-        //console.log('Con:' + Component + "|||" + 'Ur:' + Ur + "|||" + "ParentID:" + ParentID);
-        //alert('Con:' + Component + "|||" + 'Ur:' + Ur + "|||" + "ParentID:" + ParentID);          
-        console.log(typeof (Component) + "//" + Component);
+
         if (Component != 'null') { //اگر زیر منو باشد
           Self.GotoLink(Component);
           $("#MyCollapse li").children('ul').hide();
@@ -199,16 +171,12 @@ export class AppComponent implements OnInit {
 
     this.Dt.GetData().subscribe((Message) => {
       console.log("From DataTransfer:" + Message);
-      //$("#UserName").html(Message);
     });
   }
 
   Logout() {
     $("#UserName").html('');
     this.authenticationService.Logout().subscribe(Data => {
-      console.log(Data);
-      //alert(Data[1].valueOf());
-      //alert(Data.valueOf());
     },
       (error) => alert(error));
     this.router.navigate(['/']);

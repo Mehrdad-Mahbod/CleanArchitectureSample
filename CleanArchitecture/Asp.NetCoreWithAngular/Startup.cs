@@ -69,9 +69,6 @@ namespace Asp.NetCoreWithAngular
                 ClockSkew = TimeSpan.Zero
             });
 
-
-
-
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("MehrdadConnection"));

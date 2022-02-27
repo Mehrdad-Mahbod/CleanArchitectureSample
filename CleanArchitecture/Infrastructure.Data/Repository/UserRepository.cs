@@ -7,45 +7,81 @@ using Domain.Interfaces;
 using Domain.Models;
 using Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Data.SqlClient;
 
 namespace Infrastructure.Data.Repository
 {
     public class UserRepository : IUserRepository
     {
-        private ApplicationDbContext AppDbContext;
+        private ApplicationDbContext ApplicationDbContext;
 
-        public UserRepository(ApplicationDbContext AppDbContext)
+        public UserRepository(ApplicationDbContext ApplicationDbContext)
         {
-            this.AppDbContext = AppDbContext;
+            this.ApplicationDbContext = ApplicationDbContext;
         }
 
         public bool IsExistUser(string email, string password)
         {
-            return AppDbContext.Users.Any(u => u.Email == email && u.Password == password);
+            return ApplicationDbContext.Users.Any(u => u.Email == email && u.Password == password);
         }
 
-        public void AddUser(User user)
+        public Task<User> Insert(User User)
         {
-            string TSQL = "DECLARE @MaxID AS Int;" +
-                "SET @MaxID=(SELECT ISNULL(MAX(ID),0) FROM dbo.Users);DBCC CHECKIDENT(Users, RESEED,@MaxID);" +
-                "SET @MaxID=(SELECT ISNULL(MAX(ID),0) FROM dbo.UserRoles);DBCC CHECKIDENT(UserRoles, RESEED,@MaxID);";
-            int Row = AppDbContext.Database.ExecuteSqlRaw(TSQL);
-            AppDbContext.Add(user);
+            TaskCompletionSource<User> TCS = new TaskCompletionSource<User>();
+            using (IDbContextTransaction Transaction = this.ApplicationDbContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    string TSQL = "DECLARE @MaxID AS Int;" +
+                        "SET @MaxID=(SELECT ISNULL(MAX(ID),0) FROM dbo.Users);DBCC CHECKIDENT(Users, RESEED,@MaxID);" +
+                        "SET @MaxID=(SELECT ISNULL(MAX(ID),0) FROM dbo.UserRoles);DBCC CHECKIDENT(UserRoles, RESEED,@MaxID);";
+                    
+                    int Row = ApplicationDbContext.Database.ExecuteSqlRaw(TSQL);
+                    ApplicationDbContext.Add(User);
+
+                    this.ApplicationDbContext.SaveChanges();
+
+                    Transaction.Commit();
+
+                    TCS.SetResult(User);
+                }
+                catch (SqlException Ex)
+                {
+                    TCS.SetException(Ex);
+                    Transaction.Rollback();
+                    throw;
+                }
+                catch (DbUpdateException Ex)
+                {
+                    TCS.SetException(Ex);
+                    Transaction.Rollback();
+                    throw;
+                }
+                catch (Exception Ex)
+                {
+                    TCS.SetException(Ex);
+                    Transaction.Rollback();
+                    throw;
+                }
+                return TCS.Task;
+            }
         }
 
         public bool IsExistUserName(string userName)
         {
-            return AppDbContext.Users.Any(u => u.UserName == userName);
+            return ApplicationDbContext.Users.Any(u => u.UserName == userName);
         }
 
         public bool IsExistEmail(string email)
         {
-            return AppDbContext.Users.Any(u => u.Email == email);
+            return ApplicationDbContext.Users.Any(u => u.Email == email);
         }
 
         public bool IsExistPhoneNumber(string Name, string Family, string PhoneNumber)
         {
-            return AppDbContext.Users.Any(U => U.Name == Name && U.Family == Family && U.PhoneNumber == PhoneNumber);
+            return ApplicationDbContext.Users.Any(U => U.Name == Name && U.Family == Family && U.PhoneNumber == PhoneNumber);
         }
 
         public User SelectUserNameWithPassword(string UserName, string Password)
@@ -71,7 +107,7 @@ namespace Infrastructure.Data.Repository
                          })
                          .FirstOrDefault();*/
             
-            User User1 = (from U in AppDbContext.Users
+            User User1 = (from U in ApplicationDbContext.Users
                           where U.UserName == UserName && U.Password == Password
                           select new User()
                           {
@@ -80,11 +116,11 @@ namespace Infrastructure.Data.Repository
                               Family = U.Family,
                               UserName = U.UserName,
                               PhoneNumber = U.PhoneNumber,
-                              UserRoles = (from Ur in AppDbContext.UserRoles where Ur.UserId == U.ID select Ur).ToList()
+                              UserRoles = (from Ur in ApplicationDbContext.UserRoles where Ur.UserId == U.ID select Ur).ToList()
                           })
                           .FirstOrDefault();
             
-            User User2 = AppDbContext.Users
+            User User2 = ApplicationDbContext.Users
                 .Include(A => A.UserRoles)
                 .Where(A => A.UserName == UserName && A.Password == Password)
                 .Select(A => A)
@@ -95,7 +131,7 @@ namespace Infrastructure.Data.Repository
 
         public void Save()
         {
-            AppDbContext.SaveChanges();
+            ApplicationDbContext.SaveChanges();
         }
 
 

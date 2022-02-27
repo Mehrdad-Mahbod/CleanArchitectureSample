@@ -414,7 +414,7 @@ $.each(Items, function () {
       //    "</li>");
       let li;
       if (this.ParentID == null) {
-        li = $("<li style='list-style: none;' class='rounded bg-dark bg-gradient text-white'>" +
+        li = $("<li style='list-style: none;' class='rounded /*bg-dark*/ /*bg-gradient*/ text-white'>" +
           "<a class='Link' href='javascript:void(0)' data-url='" + this.Component + "' data-ParentId='" + this.ParentID + "' >" +
           "<i class='" + this.Icon + "'></i><span class=ms-2>" + this.Name + "</span> " +
           "<div class='pull-left me-2'>"+
@@ -424,7 +424,7 @@ $.each(Items, function () {
           "</li>");
       }
       else {
-        li = $("<li style='list-style: none;' class='rounded bg-dark bg-gradient'>" +
+        li = $("<li style='list-style: none;' class='rounded /*bg-dark*/ /*bg-gradient*/'>" +
           "<a class='Link' href='javascript:void(0)' data-url='" + this.Component + "' data-ParentId='" + this.ParentID + "' >" +
           "<i class='" + this.Icon + "'></i><span class=ms-2>" + this.Name + "</span> " +
           "</a>" +

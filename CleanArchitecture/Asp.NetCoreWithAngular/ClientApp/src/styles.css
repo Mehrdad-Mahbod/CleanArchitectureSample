@@ -301,3 +301,10 @@ li > a.Link {
 }
 /*****************************************************************************************/
 
+.input-group > input.ng-invalid.ng-touched{
+  border:1px solid red;
+}
+
+.input-group > input.ng-valid{
+  border:1px solid green;
+}

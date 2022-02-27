@@ -1,7 +1,8 @@
-import { Directive, Injectable, ViewChild } from '@angular/core';
-import { DataTableDirective } from 'angular-datatables';
 import * as moment from 'jalali-moment';
-import * as MyPublicMethod from '../PublicMethod';
+/*mport { Directive, Injectable, ViewChild } from '@angular/core';
+import { DataTableDirective } from 'angular-datatables';
+import * as MyPublicMethod from '../PublicMethod';*/
+
 
 
 export class DataTable {
@@ -148,6 +149,7 @@ export class DataTable {
         //این قسمت درست کار می کند
         $(MainTbl).on("click", "tbody input[type='checkbox'].SelectRow", function (e) {
             let ClosestRow = $(this).closest('tr');
+            console.log($("#MainTbl").DataTable());
             let Data = $("#MainTbl").DataTable().rows(ClosestRow).data() as any;
             //var RowNode = $("#MainTbl").DataTable().row(ClosestRow).node();
             let MainData: any;

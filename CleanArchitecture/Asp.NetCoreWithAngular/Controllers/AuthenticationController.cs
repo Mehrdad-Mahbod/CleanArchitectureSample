@@ -15,6 +15,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using AutoMapper;
 
 namespace Asp.NetCoreWithAngular.Controllers
 {
@@ -23,13 +24,15 @@ namespace Asp.NetCoreWithAngular.Controllers
     [Route("api/[controller]")]
     public class AuthenticationController : Controller
     {
-        private IUserService UserService;
-        private IConfiguration Configuration;
+        private IUserService IUserService;
+        private IConfiguration IConfiguration;
+        private IMapper IMapper;
 
-        public AuthenticationController(IUserService UserService, IConfiguration Configuration)
+        public AuthenticationController(IUserService UserService, IConfiguration Configuration, IMapper IMapper)
         {
-            this.UserService = UserService;
-            this.Configuration = Configuration;
+            this.IUserService = UserService;
+            this.IConfiguration = Configuration;
+            this.IMapper = IMapper;
         }
 
 
@@ -43,7 +46,7 @@ namespace Asp.NetCoreWithAngular.Controllers
 
         [HttpPost]
         [Route("Register")]
-        public IActionResult Register([FromBody] RegisterViewModel RegisterViewModel)
+        public async Task<IActionResult> Register([FromBody] RegisterViewModel RegisterViewModel)
         {
             ModelState.Remove("Email");
             ModelState.Remove("UserName");
@@ -52,7 +55,7 @@ namespace Asp.NetCoreWithAngular.Controllers
             if (ModelState.IsValid)
             {
 
-                CheckUser CheckUser = UserService.CheckUser(RegisterViewModel);
+                CheckUser CheckUser = IUserService.CheckUser(RegisterViewModel);
                 if (CheckUser != CheckUser.OK)
                 {
                     ViewBag.Check = CheckUser;
@@ -70,7 +73,10 @@ namespace Asp.NetCoreWithAngular.Controllers
                     CityId = 6,
                     UserRoles = new List<UserRole>() { new UserRole() { RoleId = 1 } }
                 };
-                UserService.RegisterUser(User);
+
+                UserViewModel UserViewModel = IMapper.Map<UserViewModel>(User);
+
+                UserViewModel = await IUserService.AddUserAsync(UserViewModel);
 
                 //return Ok(TogList);
                 return Json("کاربر مورد نظر در سیستم درج گردید!");
@@ -100,7 +106,7 @@ namespace Asp.NetCoreWithAngular.Controllers
             ModelState.Remove("PhoneNumber");            
             if (ModelState.IsValid)
             {
-                User U = UserService.SelectUserNameWithPassword(LoginViewModel);
+                User U = IUserService.GetUserNameWithPassword(LoginViewModel);
 
                 if (U != null)
                 {
@@ -127,14 +133,14 @@ namespace Asp.NetCoreWithAngular.Controllers
                     /*return Redirect(ReturnUrl);*/
 
                     /****************************************/
-                    var Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:MehrdadSecurityKey"]));
+                    var Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(IConfiguration["Jwt:MehrdadSecurityKey"]));
                     var creds = new SigningCredentials(Key, SecurityAlgorithms.HmacSha256);
 
                     var Expiration = DateTime.UtcNow.AddDays(7);
 
                     JwtSecurityToken token = new JwtSecurityToken(
-                        issuer: Configuration["Jwt:Value"],
-                        audience: Configuration["Jwt:Value"],
+                        issuer: IConfiguration["Jwt:Value"],
+                        audience: IConfiguration["Jwt:Value"],
                         claims: Claims,
                         expires: Expiration,
                         signingCredentials: creds);

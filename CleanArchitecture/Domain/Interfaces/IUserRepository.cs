@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Domain.Models;
 
 namespace Domain.Interfaces
@@ -11,8 +12,8 @@ namespace Domain.Interfaces
         bool IsExistUserName(string UserName);
         bool IsExistEmail(string Email);
         bool IsExistPhoneNumber(string Name,string Family ,string PhoneNumber);
-        User SelectUserNameWithPassword(string UserName, string Password);        
-        void AddUser(User user);
+        User SelectUserNameWithPassword(string UserName, string Password);
+        Task<User> Insert(User User);
         void Save();
     }
 }

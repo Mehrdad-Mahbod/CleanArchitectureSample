@@ -19,17 +19,22 @@ namespace Infrastructure.Ioc
 
             //.بایستی در این قسمت معرفی کرد AutoMapper برای استفاده از 
             service.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
-
+            /************************************************************************************************************************************************/
             //Application Layer
             service.AddScoped<IUserService, UserService>();
             //Infra Data Layer
             service.AddScoped<IUserRepository, UserRepository>();
-
+            /************************************************************************************************************************************************/
             //Application Layer
             service.AddScoped<IMenuService, MenuService>();
             //Infra Data Layer
             service.AddScoped<IMenuRepository, MenuRepository>();
-
+            /************************************************************************************************************************************************/
+            //Application Layer
+            service.AddScoped<IGeneralOfficeService, GeneralOfficeService>();
+            //Infra Data Layer
+            service.AddScoped<IGeneralOfficeRepository, GeneralOfficeRepository>();
+            /************************************************************************************************************************************************/
 
         }
     }

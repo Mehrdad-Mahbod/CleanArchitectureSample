@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Application.ViewModels
 {
-    public class UserRoleViewModel:BaseViewModel
+    public class BaseViewModel
     {
-        public int UserId { get; set; }
-        public int RoleId { get; set; }
+        public int ID { get; set; }
+        public DateTime? AddedDate { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

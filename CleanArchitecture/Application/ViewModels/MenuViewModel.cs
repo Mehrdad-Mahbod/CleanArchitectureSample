@@ -4,10 +4,8 @@ using System.Collections.Generic;
 
 namespace Application.ViewModels
 {
-    public class MenuViewModel
+    public class MenuViewModel:BaseViewModel
     {
-        public int ID { get; set; }
-
         public byte? ParentId { get; set; }
         public string Name { get; set; }
         public string Component { get; set; }

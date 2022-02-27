@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,6 +19,8 @@ import { ServerurlService } from './Services/serverurl.service';
 import { SharedModule } from './shared/shared.module';
 import { GeneralofficeComponent } from './generaloffice/generaloffice.component';
 import { DefiniteofficeComponent } from './definiteoffice/definiteoffice.component';
+import { ToastrModule } from 'ngx-toastr';
+import { DataTablesModule } from 'angular-datatables';
 
 
 const routes: Routes = [
@@ -49,6 +52,9 @@ const routes: Routes = [
     NgbModule,
     RouterModule.forRoot(routes),
     SharedModule.forRoot(),
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule,
+    DataTablesModule     
 
   ],
   providers: [

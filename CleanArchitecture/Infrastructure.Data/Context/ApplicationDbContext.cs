@@ -21,6 +21,7 @@ namespace Infrastructure.Data.Context
         public DbSet<RoleMenu> RoleMenus { get; set; }
         public DbSet<Province> Provinces { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<GeneralOffice> GeneralOffices { get; set; }
         
 
         protected override void OnModelCreating(ModelBuilder Builder)

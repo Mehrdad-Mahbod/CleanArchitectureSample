@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Application.ViewModels
 {
-    public class UserRoleViewModel:BaseViewModel
+    public class GeneralOfficeViewModel:BaseViewModel
     {
-        public int UserId { get; set; }
-        public int RoleId { get; set; }
+        public string Name { get; set; }
+        public string Priority { get; set; }
     }
 }

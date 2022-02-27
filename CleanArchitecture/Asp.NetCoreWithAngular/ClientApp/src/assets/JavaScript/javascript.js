@@ -1,3 +1,7 @@
+var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl);
+});
 window.addEventListener("resize", function () {
     if (window.innerWidth < 768) {
         document.getElementById("bs-canvas-right").style.width = 0;

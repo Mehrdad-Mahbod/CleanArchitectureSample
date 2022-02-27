@@ -16,7 +16,7 @@ namespace Infrastructure.Ioc
             CreateMap<UserViewModel, User>().ReverseMap();
             CreateMap<MenuViewModel, Menu>().ReverseMap();
             CreateMap<UserRoleViewModel, UserRole>().ReverseMap();
-            //CreateMap<FeatureViewModel, Feature>().ReverseMap();
+            CreateMap<GeneralOfficeViewModel, GeneralOffice>().ReverseMap();
         }
     }
 }
