@@ -31,7 +31,7 @@ namespace Asp.NetCoreWithAngular.Controllers
         }
 
         [HttpPost]
-        [Route("GetAllUserRoleMenu")]
+        [Route("GetAllUserMenusWithUserIdAndRoleId")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> GetAllUserMenusWithUserIdAndRoleId([FromBody] UserRoleViewModel UserRoleViewModel)
          {
