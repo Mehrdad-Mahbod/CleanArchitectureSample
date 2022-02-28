@@ -23,9 +23,8 @@ export class AppComponent implements OnInit {
   title = 'ClientApp';
   public JwtHelper = new JwtHelperService();
   public UserRole = new UserRole();
-  private InfoTokenData: any;
-  public UserToken:GetCurrentUserToken | undefined;
 
+  public UserToken:GetCurrentUserToken =new GetCurrentUserToken();
 
   constructor(public router: Router, private http: HttpClient,
     private authenticationService: AuthenticationService,
@@ -39,9 +38,6 @@ export class AppComponent implements OnInit {
     this.router.navigate(['/' + St + '']);
   }
 
-
-
-
   ngOnInit() {
     var Self = this;
 
@@ -51,11 +47,10 @@ export class AppComponent implements OnInit {
 
     if (this.IsLoggedIn()) {
       //alert('شما وارد شده اید');
-      this.UserRole.UserId = this.InfoTokenData.UserID;
-      this.UserRole.RoleId = this.InfoTokenData.RoleID;
+      this.UserRole.UserId = this.UserToken.GetUserToken().UserID;
+      this.UserRole.RoleId = this.UserToken.GetUserToken().RoleID;
 
       this.Lm.GetAllUserMenusWithUserIdAndRoleId(this.UserRole);
-
     }
     /**********Start Jquery***********/
     $("document").ready(() => {   /*function () { نسخه قدیم به این شکل بود   */      
@@ -79,8 +74,8 @@ export class AppComponent implements OnInit {
       })
 
       /*نمایش نام کاربر*/
-      if (this.InfoTokenData != undefined) {
-        $("#UserName").html(" " + this.InfoTokenData.family_name + " ");
+      if (this.UserToken.GetUserToken() != undefined) {
+        $("#UserName").html(" " + this.UserToken.GetUserToken().family_name + " ");
       }
     });
 
@@ -88,13 +83,9 @@ export class AppComponent implements OnInit {
 
   LogIn() {
     var Self = this;  
-
-    this.UserRole.UserId = this.InfoTokenData.UserID;
-    this.UserRole.RoleId = this.InfoTokenData.RoleID;
-
+    this.UserRole.UserId = this.UserToken.GetUserToken().UserID;
+    this.UserRole.RoleId = this.UserToken.GetUserToken().RoleID;
     this.Lm.GetAllUserMenusWithUserIdAndRoleId(this.UserRole);
-
-
   }
 
   Logout() {
