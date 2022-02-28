@@ -10,7 +10,7 @@ import { PublichttpService } from '../Services/publichttp.service';
 import { ServerurlService } from '../Services/serverurl.service';
 
 import { DataTable } from '../DataTable';
-import { GetCurrentUser } from '../GetCurrentUser';
+import { GetCurrentUserToken } from '../GetCurrentUserToken';
 
 import { GeneralOfficeVM } from '../ViewModels/GeneralOfficeVM';
 
@@ -37,6 +37,7 @@ export class GeneralofficeComponent implements OnInit {
   public BtnStateRegister: boolean = false;
   public BtnStateDelete: boolean = false;
   public EditCommand: boolean = false;
+  private CurrentUser!:GetCurrentUserToken;
 
   ngOnInit(): void {
     let MySelf = this;
@@ -201,10 +202,9 @@ export class GeneralofficeComponent implements OnInit {
     }
     */
     if (this.InputForm.valid) {
-      let CurrentUser = new GetCurrentUser();
 
       let GeneralOfficeVM: GeneralOfficeVM = Object.assign({}, this.InputForm.value);
-      //ExaminationVM.userId = Number.parseInt(CurrentUser!.GetUserID());
+      //ExaminationVM.userId = Number.parseInt(this.CurrentUser.GetUserToken().UserID);
 
       Swal.fire({
         title: 'توجه',
@@ -259,11 +259,10 @@ export class GeneralofficeComponent implements OnInit {
   /*برگرفته از این سایت*/
   //https://medium.com/ramsatt/integrate-data-table-with-angular-8-application-with-json-backend-f1071feeb18f
   GetAll() {
-    let CurrentUser = new GetCurrentUser();
-
+    
     let GeneralOfficeVM = {} as GeneralOfficeVM;
 
-    //GeneralOfficeVM.userId = Number.parseInt(CurrentUser!.GetUserID());
+    //GeneralOfficeVM.userId = Number.parseInt(this.CurrentUser.GetUserToken().UserID);
 
 
     this.HttpService.HttpGetWithObject(this.ServerUrl.Url + "/GeneralOffice/FetchListGeneralOffice", GeneralOfficeVM).subscribe(
@@ -283,7 +282,7 @@ export class GeneralofficeComponent implements OnInit {
 
   PostData() {
     this.BtnStateRegister = true;
-    let CurrentUser = new GetCurrentUser();
+    let CurrentUser = new GetCurrentUserToken();
 
     let GeneralOfficeVM: GeneralOfficeVM = Object.assign({}, this.InputForm.value);
     //let GeneralOfficeVM = {} as GeneralOfficeVM;

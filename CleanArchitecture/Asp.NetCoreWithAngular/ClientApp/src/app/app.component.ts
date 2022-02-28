@@ -135,7 +135,7 @@ export class AppComponent implements OnInit {
   LogIn() {
     var Self = this;  
 
-    this.InfoTokenData = JSON.parse(this.UserToken?.GetUserToken());
+    this.InfoTokenData = this.UserToken?.GetUserToken();
 
     this.UserRole.UserId = this.InfoTokenData.UserID;
     this.UserRole.RoleId = this.InfoTokenData.RoleID;
