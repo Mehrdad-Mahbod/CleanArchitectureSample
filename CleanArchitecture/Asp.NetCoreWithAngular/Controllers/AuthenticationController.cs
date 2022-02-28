@@ -64,6 +64,7 @@ namespace Asp.NetCoreWithAngular.Controllers
 
                 User User = new User()
                 {
+                    Gender = RegisterViewModel.Gender,
                     //Email = RegisterViewModel.Email.Trim().ToLower(),
                     UserName = RegisterViewModel.PhoneNumber,
                     Name = RegisterViewModel.Name,

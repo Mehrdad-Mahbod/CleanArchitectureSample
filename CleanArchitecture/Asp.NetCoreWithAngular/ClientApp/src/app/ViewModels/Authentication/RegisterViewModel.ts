@@ -1,4 +1,5 @@
 export interface RegisterViewModel {
+    gender: number;
     name:string | "";
     family:string | "";
     userName: string | "";

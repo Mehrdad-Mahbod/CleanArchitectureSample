@@ -42,11 +42,13 @@ export class GeneralofficeComponent implements OnInit {
     let MySelf = this;
     this.GetAll();
     //MyPublicMethod.OnlyNumber();
+    /*نباشد Null دستی یک مقدار اولیه تنظیم می کنیم تا شی مورد نظر*/
+    /*IsDeleted مثلا برای */
     this.InputForm = new FormGroup({
       'ID': new FormControl(0),
       'Name': new FormControl(null, [Validators.required]),
       'Priority': new FormControl(null, [Validators.required, Validators.pattern("(0?[1-9]|[1-9][0-9]|[1][1-9][1-9]|200)")]),
-      'IsDeleted': new FormControl(null)
+      'IsDeleted': new FormControl(false)
     });
 
 

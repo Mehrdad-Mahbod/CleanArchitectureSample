@@ -5,8 +5,10 @@ using System.Text;
 
 namespace Application.ViewModels
 {
-   public class RegisterViewModel
+    public class RegisterViewModel
     {
+        public byte Gender { get; set; }
+
         [Required]
         [MaxLength(250)]
         public string Name { get; set; }

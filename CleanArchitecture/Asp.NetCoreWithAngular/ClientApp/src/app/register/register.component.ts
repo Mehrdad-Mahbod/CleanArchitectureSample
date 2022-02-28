@@ -33,6 +33,7 @@ export class RegisterComponent implements OnInit {
     //alert(JSON.stringify(Form1.value));
     //let userInfo: IUser = Object.assign({}, this.formGroup.value);
     let RegisterViewModel: RegisterViewModel = Object.assign({}, Form1.value);
+    RegisterViewModel.gender = 1;//آقا
     this.authenticationService.Register(RegisterViewModel).
       subscribe(Data => alert(Data),/*token => this.recibirToken(token),*/
       error => this.ErrorManagement(error),
