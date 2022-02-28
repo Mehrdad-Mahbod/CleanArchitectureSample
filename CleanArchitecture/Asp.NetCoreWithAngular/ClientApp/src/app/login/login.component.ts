@@ -15,6 +15,9 @@ import { DataTransferService } from '../Services/datatransfer.service';
 import * as MyPublicMethod from '../../PublicMethod';
 
 import { AppComponent } from '../app.component';
+import { LoadmenusService } from '../Services/loadmenus.service';
+import { GetCurrentUserToken } from '../GetCurrentUserToken';
+import { UserRole } from '../ViewModels/UserRole';
 
 @Component({
   selector: 'app-login',
@@ -28,12 +31,13 @@ export class LoginComponent implements OnInit {
   public Username: string | undefined;
   public Password: string | undefined;
 
-  public helper = new JwtHelperService();
+  public Jwthelper = new JwtHelperService();
+
+  public UserRole = new UserRole();
+
 
   constructor(public http: HttpClient, private authenticationService: AuthenticationService, private router: Router,
-    private Serverurl: ServerurlService, private Dt: DataTransferService
-
-  ) { }
+    private Serverurl: ServerurlService, private Dt: DataTransferService,private Lm:LoadmenusService) { }
 
   ngOnInit() {
     this.InputForm = new FormGroup({
@@ -71,11 +75,17 @@ export class LoginComponent implements OnInit {
     localStorage.setItem('token', token.token);
     localStorage.setItem('tokenExpiration', token.expiration);
     //const localStorageToken = localStorage.getItem('token');
-    const LocalToken = this.helper.urlBase64Decode(token.token.split('.')[1]);
+    const LocalToken = this.Jwthelper.urlBase64Decode(token.token.split('.')[1]);
     var TokenData = JSON.parse(LocalToken);
+
     alert(JSON.stringify("UserID:" + TokenData.UserID + "RoleID:" + TokenData.RoleID + "***" + TokenData.unique_name + "***" + TokenData.family_name));
-    let A: AppComponent = new AppComponent(this.router, this.http, this.authenticationService, this.Serverurl, this.Dt);
-    A.LogIn();
+
+    this.UserRole.UserId = TokenData.UserID;
+    this.UserRole.RoleId = TokenData.RoleID;
+
+    this.Lm.GetAllUserMenusWithUserIdAndRoleId(this.UserRole);
+
+
     /***********این قسمت جالب نیست بعدا عوض کن************** */
     $(document).ready(function () {
       $('#UserName').html(" " + TokenData.family_name + " ");
@@ -84,7 +94,6 @@ export class LoginComponent implements OnInit {
     this.router.navigate(["/"]);
     //window.location.reload();
   }
-
 
   ErrorManagement(Error: { error: { [x: string]: any; }; }) {
     if (Error && Error.error) {

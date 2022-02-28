@@ -12,6 +12,7 @@ import * as MyPublicMethod from '../PublicMethod';
 import * as $ from "jquery";
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { GetCurrentUserToken } from './GetCurrentUserToken';
+import { LoadmenusService } from './Services/loadmenus.service';
 
 @Component({
   selector: 'app-root',
@@ -22,11 +23,13 @@ export class AppComponent implements OnInit {
   title = 'ClientApp';
   public JwtHelper = new JwtHelperService();
   public UserRole = new UserRole();
+  private InfoTokenData: any;
+  public UserToken:GetCurrentUserToken | undefined;
 
 
   constructor(public router: Router, private http: HttpClient,
     private authenticationService: AuthenticationService,
-    private Serverurl: ServerurlService, private Dt: DataTransferService) {
+    private Serverurl: ServerurlService, private Dt: DataTransferService, private Lm:LoadmenusService) {
   }
 
 
@@ -36,65 +39,22 @@ export class AppComponent implements OnInit {
     this.router.navigate(['/' + St + '']);
   }
 
-  private InfoTokenData: any;
-  public UserToken:GetCurrentUserToken | undefined;
+
 
 
   ngOnInit() {
     var Self = this;
-
 
     MyPublicMethod.MainFaunction();
     MyPublicMethod.OnlyNumberWithSeparatingThreeDigits();
     MyPublicMethod.OnlyNumber();
 
     if (this.IsLoggedIn()) {
-
       //alert('شما وارد شده اید');
-      const LocalToken = localStorage.getItem('token');
-      const TokenData = this.JwtHelper.urlBase64Decode(LocalToken!.split('.')[1]);
-      this.InfoTokenData = JSON.parse(TokenData);
       this.UserRole.UserId = this.InfoTokenData.UserID;
       this.UserRole.RoleId = this.InfoTokenData.RoleID;
 
-      
-      this.http.post<any>(this.Serverurl.Url + '/Menu/GetAllUserRoleMenu', this.UserRole).subscribe(Data => {
-        var Self = this;
-        var ul = $("<ul class='sidebar-nav' style='top: 30%;'></ul>");
-        ul.attr("id", "MyCollapse");
-
-        var source = MyPublicMethod.CreateNestedData(Data);
-        MyPublicMethod.CreateUL(ul, source);
-        $(ul).appendTo("#SidebarWrapper").insertAfter("#BetWeenMenu");
-        
-
-        console.log(Data);
-
-        MyPublicMethod.MyCollapsechildrenHide();
-        MyPublicMethod.OpenMenuDataBase();
-
-        /*رویداد کلیک  برای منوهای دیتا بیس*/
-        $("a.Link").click(function () {
-          //e.preventDefault();
-          var UrArray = $(this).attr('data-url')!.split("/");
-          var Component = UrArray[0];
-          var Ur = "/" + $(this).attr('data-url');
-          var ParentID = $(this).attr('data-ParentId');
-          if (Component != 'null') { //اگر زیر منو باشد
-            Self.GotoLink(Component);
-            $("#MyCollapse li").children('ul').hide();
-          }
-        });
-
-      },
-        (error) => { alert(JSON.stringify(error)) }
-      );
-      
-
-      this.Dt.GetData().subscribe((Message) => {
-        console.log("From DataTransfer:" + Message);
-        //$("#UserName").html(Message);
-      });
+      this.Lm.GetAllUserMenusWithUserIdAndRoleId(this.UserRole);
 
     }
     /**********Start Jquery***********/
@@ -118,12 +78,6 @@ export class AppComponent implements OnInit {
         }
       })
 
-      const LocalToken = localStorage.getItem('token');
-      if (LocalToken != null) {
-        const TokenData = Self.JwtHelper.urlBase64Decode(LocalToken.split('.')[1]);
-        this.InfoTokenData != JSON.parse(TokenData);
-      }
-
       /*نمایش نام کاربر*/
       if (this.InfoTokenData != undefined) {
         $("#UserName").html(" " + this.InfoTokenData.family_name + " ");
@@ -135,43 +89,12 @@ export class AppComponent implements OnInit {
   LogIn() {
     var Self = this;  
 
-    this.InfoTokenData = this.UserToken?.GetUserToken();
-
     this.UserRole.UserId = this.InfoTokenData.UserID;
     this.UserRole.RoleId = this.InfoTokenData.RoleID;
 
+    this.Lm.GetAllUserMenusWithUserIdAndRoleId(this.UserRole);
 
-    this.http.post<any>(this.Serverurl.Url + '/Menu/GetAllUserRoleMenu', this.UserRole).subscribe(Data => {
-      //var Self = this;
-      var ul = $("<ul class='sidebar-nav' style='top: 30%;'></ul>");
-      ul.attr("id", "MyCollapse");
 
-      var source = MyPublicMethod.CreateNestedData(Data);
-      MyPublicMethod.CreateUL(ul, source);
-      $(ul).appendTo("#SidebarWrapper").insertAfter("#StaticMenu");
-      MyPublicMethod.MyCollapsechildrenHide();
-      MyPublicMethod.OpenMenuDataBase();
-
-      /*رویداد کلیک  برای منوهای دیتا بیس*/
-      $("a.Link").click(function () {
-        //e.preventDefault();
-        var UrArray = $(this).attr('data-url')!.split("/");
-        var Component = UrArray![0];
-        var Ur = "/" + $(this).attr('data-url');
-        var ParentID = $(this).attr('data-ParentId');
-
-        if (Component != 'null') { //اگر زیر منو باشد
-          Self.GotoLink(Component);
-          $("#MyCollapse li").children('ul').hide();
-        }
-      });
-    },
-      (error) => { alert(JSON.stringify(error)) }
-    );
-
-    this.Dt.GetData().subscribe((Message) => {
-      console.log("From DataTransfer:" + Message);
-    });
   }
 
   Logout() {
