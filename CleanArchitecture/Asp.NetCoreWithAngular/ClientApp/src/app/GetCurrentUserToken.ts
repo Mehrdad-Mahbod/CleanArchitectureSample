@@ -1,6 +1,6 @@
 import { JwtHelperService } from '@auth0/angular-jwt';
 
-export class GetCurrentUser {
+export class GetCurrentUserToken {
 
   constructor() { }
 

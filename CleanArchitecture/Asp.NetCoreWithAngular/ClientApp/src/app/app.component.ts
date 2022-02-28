@@ -11,6 +11,7 @@ import * as MyPublicMethod from '../PublicMethod';
 
 import * as $ from "jquery";
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { GetCurrentUserToken } from './GetCurrentUserToken';
 
 @Component({
   selector: 'app-root',
@@ -36,6 +37,7 @@ export class AppComponent implements OnInit {
   }
 
   private InfoTokenData: any;
+  public UserToken:GetCurrentUserToken | undefined;
 
 
   ngOnInit() {
@@ -133,9 +135,7 @@ export class AppComponent implements OnInit {
   LogIn() {
     var Self = this;  
 
-    const LocalToken = localStorage.getItem('token');
-    const TokenData = this.JwtHelper.urlBase64Decode(LocalToken!.split('.')[1]);
-    this.InfoTokenData = JSON.parse(TokenData);
+    this.InfoTokenData = JSON.parse(this.UserToken?.GetUserToken());
 
     this.UserRole.UserId = this.InfoTokenData.UserID;
     this.UserRole.RoleId = this.InfoTokenData.RoleID;

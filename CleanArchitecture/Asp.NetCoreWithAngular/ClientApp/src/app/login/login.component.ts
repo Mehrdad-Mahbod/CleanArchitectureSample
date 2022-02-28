@@ -7,11 +7,12 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import * as $ from "jquery"
 
 import { LoginViewModel } from '../ViewModels/Authentication/LoginViewModel';
-import { RegisterViewModel } from '../ViewModels/Authentication/RegisterViewModel';
 
 import { AuthenticationService } from '../Services/authentication.service';
 import { ServerurlService } from '../Services/serverurl.service';
 import { DataTransferService } from '../Services/datatransfer.service';
+
+import * as MyPublicMethod from '../../PublicMethod';
 
 import { AppComponent } from '../app.component';
 
@@ -46,7 +47,6 @@ export class LoginComponent implements OnInit {
   }
 
   Login() {
-
     console.log(this.InputForm);
     if (this.InputForm.valid) {
       let LoginViewModel: LoginViewModel = Object.assign({}, this.InputForm.value);
@@ -84,6 +84,7 @@ export class LoginComponent implements OnInit {
     this.router.navigate(["/"]);
     //window.location.reload();
   }
+
 
   ErrorManagement(Error: { error: { [x: string]: any; }; }) {
     if (Error && Error.error) {
