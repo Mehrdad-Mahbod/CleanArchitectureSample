@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
   }
 
   Login() {
+
     console.log(this.InputForm);
     if (this.InputForm.valid) {
       let LoginViewModel: LoginViewModel = Object.assign({}, this.InputForm.value);

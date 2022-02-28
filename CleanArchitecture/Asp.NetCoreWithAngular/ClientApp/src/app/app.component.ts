@@ -56,7 +56,7 @@ export class AppComponent implements OnInit {
       this.UserRole.RoleId = this.InfoTokenData.RoleID;
 
       
-      this.http.post<any>(this.Serverurl.Url + '/Menu/GetAllUserMenusWithUserIdAndRoleId', this.UserRole).subscribe(Data => {
+      this.http.post<any>(this.Serverurl.Url + '/Menu/GetAllUserRoleMenu', this.UserRole).subscribe(Data => {
         var Self = this;
         var ul = $("<ul class='sidebar-nav' style='top: 30%;'></ul>");
         ul.attr("id", "MyCollapse");
@@ -141,7 +141,7 @@ export class AppComponent implements OnInit {
     this.UserRole.RoleId = this.InfoTokenData.RoleID;
 
 
-    this.http.post<any>(this.Serverurl.Url + '/Menu/GetAllUserMenusWithUserIdAndRoleId', this.UserRole).subscribe(Data => {
+    this.http.post<any>(this.Serverurl.Url + '/Menu/GetAllUserRoleMenu', this.UserRole).subscribe(Data => {
       //var Self = this;
       var ul = $("<ul class='sidebar-nav' style='top: 30%;'></ul>");
       ul.attr("id", "MyCollapse");
