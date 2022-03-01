@@ -1,18 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
 import { AuthenticationService } from './Services/authentication.service';
 import { DataTransferService } from './Services/datatransfer.service';
 import { ServerurlService } from './Services/serverurl.service';
+import { LoadmenusService } from './Services/loadmenus.service';
 
 import { UserRole } from './ViewModels/UserRole';
-
 import * as MyPublicMethod from '../PublicMethod';
-
 import * as $ from "jquery";
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { GetCurrentUserToken } from './GetCurrentUserToken';
-import { LoadmenusService } from './Services/loadmenus.service';
+
 
 @Component({
   selector: 'app-root',
@@ -29,13 +29,6 @@ export class AppComponent implements OnInit {
   constructor(public router: Router, private http: HttpClient,
     private authenticationService: AuthenticationService,
     private Serverurl: ServerurlService, private Dt: DataTransferService, private Lm:LoadmenusService) {
-  }
-
-
-  GotoLink(St: string): void {
-    this.router.navigateByUrl("./");
-    //this.router.navigate(['/Home']);
-    this.router.navigate(['/' + St + '']);
   }
 
   ngOnInit() {
@@ -97,9 +90,9 @@ export class AppComponent implements OnInit {
 
     $("#MyCollapse").remove();
   }
+
   IsLoggedIn() {
     return this.authenticationService.IsLoggedIn();
   }
-
 
 }

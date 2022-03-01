@@ -29,41 +29,35 @@ namespace Application.Services
         public async Task<GeneralOfficeViewModel> AddAsync(GeneralOfficeViewModel GeneralOfficeViewModel)
         {
             TaskCompletionSource<GeneralOfficeViewModel> TCS = new TaskCompletionSource<GeneralOfficeViewModel>();
-            await Task.Run(() =>
+            try
             {
-                try
-                {
-                    GeneralOffice GeneralOffice = this.IMapper.Map<GeneralOffice>(GeneralOfficeViewModel);
-                    this.IGeneralOfficeRepository.Insert(GeneralOffice);
-                    //this.IGeneralOfficeRepository.SaveAsync();
-                    GeneralOfficeViewModel = this.IMapper.Map<GeneralOfficeViewModel>(GeneralOffice);
-                    TCS.SetResult(GeneralOfficeViewModel);
-                }
-                catch (Exception Ex)
-                {
-                    TCS.SetException(Ex);
-                }
-            });
+                GeneralOffice GeneralOffice = this.IMapper.Map<GeneralOffice>(GeneralOfficeViewModel);
+                GeneralOffice = await this.IGeneralOfficeRepository.InsertAsync(GeneralOffice);
+                //this.IGeneralOfficeRepository.SaveAsync();
+                GeneralOfficeViewModel = this.IMapper.Map<GeneralOfficeViewModel>(GeneralOffice);
+                TCS.SetResult(GeneralOfficeViewModel);
+            }
+            catch (Exception Ex)
+            {
+                TCS.SetException(Ex);
+            }
             return TCS.Task.Result;
         }
 
         public async Task<GeneralOfficeViewModel> EditAsync(GeneralOfficeViewModel GeneralOfficeViewModel)
         {
             TaskCompletionSource<GeneralOfficeViewModel> TCS = new TaskCompletionSource<GeneralOfficeViewModel>();
-            await Task.Run(() =>
+            try
             {
-                try
-                {
-                    GeneralOffice GeneralOffice = this.IMapper.Map<GeneralOffice>(GeneralOfficeViewModel);
-                    this.IGeneralOfficeRepository.Update(GeneralOffice);
-                    GeneralOfficeViewModel = this.IMapper.Map<GeneralOfficeViewModel>(GeneralOffice);
-                    TCS.SetResult(GeneralOfficeViewModel);
-                }
-                catch (Exception Ex)
-                {
-                    TCS.SetException(Ex);
-                }
-            });
+                GeneralOffice GeneralOffice = this.IMapper.Map<GeneralOffice>(GeneralOfficeViewModel);
+                GeneralOffice = await this.IGeneralOfficeRepository.UpdateAsync(GeneralOffice);
+                GeneralOfficeViewModel = this.IMapper.Map<GeneralOfficeViewModel>(GeneralOffice);
+                TCS.SetResult(GeneralOfficeViewModel);
+            }
+            catch (Exception Ex)
+            {
+                TCS.SetException(Ex);
+            }
             return TCS.Task.Result;
 
         }

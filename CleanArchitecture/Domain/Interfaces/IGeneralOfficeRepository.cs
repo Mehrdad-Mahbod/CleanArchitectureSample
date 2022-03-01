@@ -9,8 +9,8 @@ namespace Domain.Interfaces
 {
     public interface IGeneralOfficeRepository
     {
-        public Task<GeneralOffice> Insert(GeneralOffice GeneralOffice);
-        public Task<GeneralOffice> Update(GeneralOffice GeneralOffice);
+        public Task<GeneralOffice> InsertAsync(GeneralOffice GeneralOffice);
+        public Task<GeneralOffice> UpdateAsync(GeneralOffice GeneralOffice);
         public Task<List<GeneralOffice>> SelectList(GeneralOffice GeneralOffice);
         public Task<GeneralOffice> Select(GeneralOffice GeneralOffice);
         public Task<int> Delete(GeneralOffice GeneralOffice);

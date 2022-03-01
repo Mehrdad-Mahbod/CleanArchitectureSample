@@ -20,8 +20,6 @@ export class LoadmenusService {
     private Serverurl: ServerurlService, private Dt: DataTransferService) {
   }
 
-
-
   GetAllUserMenusWithUserIdAndRoleId(UserRole: UserRole) {
     this.http.post<any>(this.Serverurl.Url + '/Menu/GetAllUserMenusWithUserIdAndRoleId', UserRole).subscribe(Data => {
       var Self = this;
@@ -31,9 +29,6 @@ export class LoadmenusService {
       var source = MyPublicMethod.CreateNestedData(Data);
       MyPublicMethod.CreateUL(ul, source);
       $(ul).appendTo("#SidebarWrapper").insertAfter("#BetWeenMenu");
-
-
-      console.log(Data);
 
       MyPublicMethod.MyCollapsechildrenHide();
       MyPublicMethod.OpenMenuDataBase();
@@ -61,7 +56,5 @@ export class LoadmenusService {
     //this.router.navigate(['/Home']);
     this.router.navigate(['/' + St + '']);
   }
-
-
 
 }

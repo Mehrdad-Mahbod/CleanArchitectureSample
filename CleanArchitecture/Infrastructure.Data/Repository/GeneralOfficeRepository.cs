@@ -21,85 +21,81 @@ namespace Infrastructure.Data.Repository
             this.ApplicationDbContext = ApplicationDbContext;
         }
 
-        public Task<GeneralOffice> Insert(GeneralOffice GeneralOffice)
+        public async Task<GeneralOffice> InsertAsync(GeneralOffice GeneralOffice)
         {
             TaskCompletionSource<GeneralOffice> TCS = new TaskCompletionSource<GeneralOffice>();
-
-            using (IDbContextTransaction Transaction = this.ApplicationDbContext.Database.BeginTransaction())
+            await Task.Run(() =>
             {
-                /*await Task.Run(() =>
+                using (IDbContextTransaction Transaction = this.ApplicationDbContext.Database.BeginTransaction())
                 {
-                });*/
+                    try
+                    {
+                        string TSql = "DECLARE @MaxID AS Int;SET @MaxID=(SELECT ISNULL(MAX(ID),0) FROM dbo.GeneralOffices);" +
+                        "DBCC CHECKIDENT(GeneralOffices, RESEED,@MaxID);";
 
+                        int Row = this.ApplicationDbContext.Database.ExecuteSqlRaw(TSql);
+
+                        this.ApplicationDbContext.Add(GeneralOffice);
+                        this.ApplicationDbContext.SaveChangesAsync().Wait();
+
+                        Transaction.Commit();
+
+                        TCS.SetResult(GeneralOffice);
+                    }
+                    catch (SqlException Ex)
+                    {
+                        TCS.SetException(Ex);
+                        Transaction.Rollback();
+                        throw;
+                    }
+                    catch (DbUpdateException Ex)
+                    {
+                        TCS.SetException(Ex);
+                        Transaction.Rollback();
+                        throw;
+                    }
+                    catch (Exception Ex)
+                    {
+                        TCS.SetException(Ex);
+                        Transaction.Rollback();
+                        throw;
+                    }                    
+                }
+            });
+            return TCS.Task.Result;
+        }
+
+        public async Task<GeneralOffice> UpdateAsync(GeneralOffice GeneralOffice)
+        {
+            TaskCompletionSource<GeneralOffice> TCS = new TaskCompletionSource<GeneralOffice>();
+            await Task.Run(() =>
+            {
                 try
                 {
-                    string TSql = "DECLARE @MaxID AS Int;SET @MaxID=(SELECT ISNULL(MAX(ID),0) FROM dbo.GeneralOffices);" +
-                    "DBCC CHECKIDENT(GeneralOffices, RESEED,@MaxID);";
+                    this.ApplicationDbContext.Entry(GeneralOffice).State = EntityState.Modified;
 
-                    int Row = this.ApplicationDbContext.Database.ExecuteSqlRaw(TSql);
+                    this.ApplicationDbContext.Update(GeneralOffice);
+                    this.ApplicationDbContext.SaveChangesAsync().Wait();
 
-                    this.ApplicationDbContext.Add(GeneralOffice);
-                    this.ApplicationDbContext.SaveChanges();
-
-                    Transaction.Commit();
-
-                    TCS.SetResult(GeneralOffice);                    
+                    TCS.SetResult(GeneralOffice);
                 }
                 catch (SqlException Ex)
                 {
                     TCS.SetException(Ex);
-                    Transaction.Rollback();
                     throw;
                 }
                 catch (DbUpdateException Ex)
                 {
                     TCS.SetException(Ex);
-                    Transaction.Rollback();
                     throw;
                 }
                 catch (Exception Ex)
                 {
                     TCS.SetException(Ex);
-                    Transaction.Rollback();
                     throw;
                 }
-                return TCS.Task;
-            }                             
-        }
-
-        public Task<GeneralOffice> Update(GeneralOffice GeneralOffice)
-        {
-            TaskCompletionSource<GeneralOffice> TCS = new TaskCompletionSource<GeneralOffice>();
-
-            /*await Task.Run(() =>
-            {
-            });*/
-
-            try
-            {
-                this.ApplicationDbContext.Entry(GeneralOffice).State = EntityState.Modified;
-
-                this.ApplicationDbContext.Update(GeneralOffice);
-                this.ApplicationDbContext.SaveChanges();
-
-                TCS.SetResult(GeneralOffice);
-            }
-            catch (SqlException Ex)
-            {
-                TCS.SetException(Ex);
-                throw;
-            }
-            catch (DbUpdateException Ex)
-            {
-                TCS.SetException(Ex);
-                throw;
-            }
-            catch (Exception Ex)
-            {
-                TCS.SetException(Ex);
-                throw;
-            }
-            return TCS.Task;
+            });
+            return TCS.Task.Result;
 
         }
 
