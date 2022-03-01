@@ -69,33 +69,34 @@ namespace Application.Services
 
         public async Task<List<GeneralOfficeViewModel>> GetListAsync(GeneralOfficeViewModel GeneralOfficeViewModel)
         {
-            GeneralOffice GeneralOffice = this.IMapper.Map<GeneralOffice>(GeneralOfficeViewModel);
-
-            List<GeneralOffice> GeneralOfficeList =await this.IGeneralOfficeRepository.SelectList(GeneralOffice);
-
-            return this.IMapper.Map<List<GeneralOfficeViewModel>>(GeneralOfficeList);
-
-
-
+            TaskCompletionSource<List<GeneralOfficeViewModel>> TCS = new TaskCompletionSource<List<GeneralOfficeViewModel>>();
+            try
+            {
+                GeneralOffice GeneralOffice = this.IMapper.Map<GeneralOffice>(GeneralOfficeViewModel);
+                List<GeneralOffice> GeneralOfficeList = await this.IGeneralOfficeRepository.SelectListAsync(GeneralOffice);
+                TCS.SetResult(this.IMapper.Map<List<GeneralOfficeViewModel>>(GeneralOfficeList));
+            }
+            catch (Exception Ex)
+            {
+                TCS.SetException(Ex);
+            }
+            return TCS.Task.Result;
         }
 
         public async Task<int> RemoveAsync(GeneralOfficeViewModel GeneralOfficeViewModel)
         {
             TaskCompletionSource<int> TCS = new TaskCompletionSource<int>();
-            await Task.Run(() =>
+            try
             {
-                try
-                {
-                    GeneralOffice GeneralOffice = this.IMapper.Map<GeneralOffice>(GeneralOfficeViewModel);
-                    int Row = this.IGeneralOfficeRepository.Delete(GeneralOffice).Result;
-                    //GeneralOfficeViewModel = this.IMapper.Map<GeneralOfficeViewModel>(GeneralOffice);
-                    TCS.SetResult(Row);
-                }
-                catch (Exception Ex)
-                {
-                    TCS.SetException(Ex);
-                }
-            });
+                GeneralOffice GeneralOffice = this.IMapper.Map<GeneralOffice>(GeneralOfficeViewModel);
+                int Row = await this.IGeneralOfficeRepository.DeleteAsync(GeneralOffice);
+                //GeneralOfficeViewModel = this.IMapper.Map<GeneralOfficeViewModel>(GeneralOffice);
+                TCS.SetResult(Row);
+            }
+            catch (Exception Ex)
+            {
+                TCS.SetException(Ex);
+            }
             return TCS.Task.Result;
         }
     }

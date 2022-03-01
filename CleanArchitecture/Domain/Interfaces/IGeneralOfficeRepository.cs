@@ -11,8 +11,8 @@ namespace Domain.Interfaces
     {
         public Task<GeneralOffice> InsertAsync(GeneralOffice GeneralOffice);
         public Task<GeneralOffice> UpdateAsync(GeneralOffice GeneralOffice);
-        public Task<List<GeneralOffice>> SelectList(GeneralOffice GeneralOffice);
+        public Task<List<GeneralOffice>> SelectListAsync(GeneralOffice GeneralOffice);
         public Task<GeneralOffice> Select(GeneralOffice GeneralOffice);
-        public Task<int> Delete(GeneralOffice GeneralOffice);
+        public Task<int> DeleteAsync(GeneralOffice GeneralOffice);
     }
 }

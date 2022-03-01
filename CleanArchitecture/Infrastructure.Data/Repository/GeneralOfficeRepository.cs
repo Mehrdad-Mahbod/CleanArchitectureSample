@@ -104,57 +104,60 @@ namespace Infrastructure.Data.Repository
             throw new NotImplementedException();
         }
 
-        public async Task<List<GeneralOffice>> SelectList(GeneralOffice GeneralOffice)
+        public async Task<List<GeneralOffice>> SelectListAsync(GeneralOffice GeneralOffice)
         {
             TaskCompletionSource<List<GeneralOffice>> TCS = new TaskCompletionSource<List<GeneralOffice>>();
             List<GeneralOffice> GeneralOfficeList = new List<GeneralOffice>();
-            try
+            await Task.Run(() =>
             {
-                await Task.Run(() =>
+                try
                 {
                     GeneralOfficeList = this.ApplicationDbContext.GeneralOffices.Select(A => A).ToList();
                     TCS.SetResult(GeneralOfficeList);
-                });
-            }
-            catch(SqlException Ex)
-            {
-                TCS.SetException(Ex);
-            }
+                }
+                catch (SqlException Ex)
+                {
+                    TCS.SetException(Ex);
+                }
+            });
 
             return TCS.Task.Result;
         }
 
-        public Task<int> Delete(GeneralOffice GeneralOffice)
+        public async Task<int> DeleteAsync(GeneralOffice GeneralOffice)
         {
             TaskCompletionSource<int> TCS = new TaskCompletionSource<int>();
             int Row = 0;
-            try
+            await Task.Run(() =>
             {
-                this.ApplicationDbContext.Entry(GeneralOffice).State = EntityState.Modified;
+                try
+                {
+                    this.ApplicationDbContext.Entry(GeneralOffice).State = EntityState.Modified;
 
-                GeneralOffice.IsDeleted = true;
+                    GeneralOffice.IsDeleted = true;
 
-                this.ApplicationDbContext.Update(GeneralOffice);
-                Row = this.ApplicationDbContext.SaveChanges();
+                    this.ApplicationDbContext.Update(GeneralOffice);
+                    Row = this.ApplicationDbContext.SaveChangesAsync().GetAwaiter().GetResult();
 
-                TCS.SetResult(Row);
-            }
-            catch (SqlException Ex)
-            {
-                TCS.SetException(Ex);
-                throw;
-            }
-            catch (DbUpdateException Ex)
-            {
-                TCS.SetException(Ex);
-                throw;
-            }
-            catch (Exception Ex)
-            {
-                TCS.SetException(Ex);
-                throw;
-            }
-            return TCS.Task;
+                    TCS.SetResult(Row);
+                }
+                catch (SqlException Ex)
+                {
+                    TCS.SetException(Ex);
+                    throw;
+                }
+                catch (DbUpdateException Ex)
+                {
+                    TCS.SetException(Ex);
+                    throw;
+                }
+                catch (Exception Ex)
+                {
+                    TCS.SetException(Ex);
+                    throw;
+                }
+            });
+            return TCS.Task.Result;
         }
     }
 }
