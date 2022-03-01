@@ -33,7 +33,8 @@ namespace Application.Services
             {
                 GeneralOffice GeneralOffice = this.IMapper.Map<GeneralOffice>(GeneralOfficeViewModel);
                 GeneralOffice = await this.IGeneralOfficeRepository.InsertAsync(GeneralOffice);
-                //this.IGeneralOfficeRepository.SaveAsync();
+                //GeneralOffice = await this.IGeneralOfficeRepository.InsertAsyncGenericRepository(GeneralOffice);
+
                 GeneralOfficeViewModel = this.IMapper.Map<GeneralOfficeViewModel>(GeneralOffice);
                 TCS.SetResult(GeneralOfficeViewModel);
             }

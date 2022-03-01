@@ -1,22 +1,25 @@
-﻿using Domain.Interfaces;
-using Domain.Models;
-using Infrastructure.Data.Context;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using Domain.Interfaces;
+using Domain.Models;
+using Infrastructure.Data.Context;
+using Infrastructure.Data.GenericRepository;
+using System.Linq.Expressions;
+using Domain.Interfaces.GenericRepository;
 
 namespace Infrastructure.Data.Repository
 {
-    public class GeneralOfficeRepository : IGeneralOfficeRepository
+    public class GeneralOfficeRepository : GenericRepository<GeneralOffice>, IGeneralOfficeRepository
     {
         private ApplicationDbContext ApplicationDbContext;
 
-        public GeneralOfficeRepository(ApplicationDbContext ApplicationDbContext )
+        public GeneralOfficeRepository(ApplicationDbContext ApplicationDbContext ):base(ApplicationDbContext)
         {
             this.ApplicationDbContext = ApplicationDbContext;
         }
@@ -99,9 +102,22 @@ namespace Infrastructure.Data.Repository
 
         }
 
-        public Task<GeneralOffice> Select(GeneralOffice GeneralOffice)
+        public async Task<GeneralOffice> SelectAsync(GeneralOffice GeneralOffice)
         {
-            throw new NotImplementedException();
+            TaskCompletionSource<GeneralOffice> TCS = new TaskCompletionSource<GeneralOffice>();
+            await Task.Run(() =>
+            {
+                try
+                {
+                    GeneralOffice = this.ApplicationDbContext.GeneralOffices.FindAsync(GeneralOffice.ID).Result;
+                    TCS.SetResult(GeneralOffice);
+                }
+                catch (SqlException Ex)
+                {
+                    TCS.SetException(Ex);
+                }
+            });
+            return TCS.Task.Result;
         }
 
         public async Task<List<GeneralOffice>> SelectListAsync(GeneralOffice GeneralOffice)
@@ -120,7 +136,6 @@ namespace Infrastructure.Data.Repository
                     TCS.SetException(Ex);
                 }
             });
-
             return TCS.Task.Result;
         }
 
@@ -159,5 +174,7 @@ namespace Infrastructure.Data.Repository
             });
             return TCS.Task.Result;
         }
+
+
     }
 }
