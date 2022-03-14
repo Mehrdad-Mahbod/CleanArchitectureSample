@@ -1,3 +1,4 @@
+import { AutofillMonitor } from '@angular/cdk/text-field';
 import * as moment from 'jalali-moment';
 /*mport { Directive, Injectable, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
@@ -17,24 +18,27 @@ export class DataTable {
         this.ObjectList = ObjectList;
     }
 
-    GetOptionAngularDataTable(): any {
+    GetOptionAngularDataTable(): any {        
         this.dtOptions = {
             paging: true,
-            jQueryUI: true, // ThemeRoller-stöd
-            //bLengthChange: false,
-            //filter: false,
-            info: true,
-            dom: 'lrftpi',
-            autoWidth: true,
-            scrollY: '30vh',
+            jQueryUI: false, // ThemeRoller-stöd
+            bLengthChange: false,
+            filter: true,
+            /*fixedHeader: true,*/
+            ordering: false,
+            info: false,
+            /*dom: 'lrftpi',*/
+            dom: 'lrtpi',
+            autoWidth: false,
+            /*scrollY: '30vh',*/
             //scrollCollapse: true,
             processing: true,
-            pageLength: 5,
+            //pageLength: 5,
             data: this.ObjectList,
             destroy: true,
-            lengthMenu: [[5, 10, 15, -1], ['پنج', 'ده', 'پانزده', "همه"]],
+            //lengthMenu:[[5, 10, 15, -1], ['پنج', 'ده', 'پانزده', "همه"]],
             columnDefs: [
-                {"className": "dt-center", "targets": "_all"}
+                { "className": "dt-center", "targets": "_all" }
             ],
             columns: this.Columns,
             rowCallback: function (HtmlRow: any, Data: any, Index: any) {
@@ -52,10 +56,11 @@ export class DataTable {
                 }
             },
             //responsive:true
+            /*
             responsive: {
                 details: {
-                    //responsive: true,
-                    renderer: function (_api: any, _rowIdx: any, columns: any) {
+                    //responsive: true,                    
+                    renderer: function (_api: any, _rowIdx: any, columns: any) {                       
                         var data = $.map(columns, function (col, i) {
                             let StrHtml;
                             if (col.title == "تاریخ ثبت") {
@@ -87,10 +92,44 @@ export class DataTable {
                     }
                 }
             },
+            */
             select: true,
             //RowSelect: 'single',
             //dom: 'Rt', 
+            initComplete: function () {
+                /*alert("123");*/
+                $('#MainTbl thead tr').clone(true).addClass('filters').appendTo('#MainTbl thead');
+                var api = this.api();
+                // For each column
+                api.columns().eq(0).each(function (colIdx: any) {
+                    var cell = $('.filters th').eq($(api.column(colIdx).header()).index());
+                    $(cell).removeClass('sorting');
+                    var title = $(cell).text();
+                    $(cell).html('<input type="text" class="form-control text-center" placeholder="' + title + '" />');
+                    $('input', $('.filters th').eq($(api.column(colIdx).header()).index()))
+                        .off('keyup change')
+                        .on('keyup change', function (e) {
+                            e.stopPropagation();
+                            $(this).attr('title', (<any>$(this)).val());
+                            var regexr = '({search})'; //$(this).parents('th').find('select').val();
+                            var cursorPosition = (<any>this).selectionStart;
+                            api
+                                .column(colIdx)
+                                .search(((<any>$(this)).val() != "")
+                                    ? regexr.replace('{search}', '(((' + (<any>$(this)).val() + ')))')
+                                    : "", (<any>$(this)).val() != "", (<any>$(this)).val() == "")
+                                .draw();
+                            /*
+                            .column(colIdx)
+                            .search((<any>$(this)).val())
+                            .draw();
+                            */
+                            (<any>$(this)).focus()[0].setSelectionRange(cursorPosition, cursorPosition);                            
+                        });
+                });
+            }
         };
+
         return this.dtOptions;
     }
 

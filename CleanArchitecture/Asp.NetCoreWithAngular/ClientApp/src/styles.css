@@ -308,3 +308,30 @@ li > a.Link {
 .input-group > input.ng-valid{
   border:1px solid green;
 }
+/******************************************************************************************/
+table.dataTable tr{
+  cursor: pointer;
+}
+table.dataTable th, table.dataTable td {
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+table.dataTable tbody tr td,table.dataTable thead tr th{
+  padding: 1px;
+}
+/******************************************************************************************/
+.RtlDirection {
+  direction: rtl;
+}
+
+.LtrDirection {
+  direction: ltr;
+}
+/******************************************************************************************/
+/*Responsive Icon to Center*/
+table.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control:before,
+ table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control:before {
+   left: unset;
+   right: 40%;
+ }
+ /******************************************************************************************/

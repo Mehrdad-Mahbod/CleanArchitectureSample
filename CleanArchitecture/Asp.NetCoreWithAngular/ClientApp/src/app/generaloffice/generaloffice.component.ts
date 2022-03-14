@@ -54,19 +54,21 @@ export class GeneralofficeComponent implements OnInit {
 
 
     let Columns = [
+      /*
       {   // Responsive control column
         title: 'جزئیات',
         data: null,
-        defaultContent: '',/*<i class="fa fa-plus-square"></i>*/
+        defaultContent: '',/*<i class="fa fa-plus-square"></i>/*
         className: 'control RowDetails',
         orderable: false,
         visible: true,
       },
+      */
       { title: 'کد اصلی', data: 'id' },
       //{ title: 'کد کاربر', data: 'userId' },
       { title: 'نام گروه', data: 'name' },
       { title: 'اولویت', data: 'priority' },
-      { title: 'تاریخ ثبت', data: 'addedDate' },
+      { title: 'تاریخ ثبت', data: 'addedDate'},
       {
         title: 'حذف شده',
         data: 'isDeleted',
@@ -103,7 +105,8 @@ export class GeneralofficeComponent implements OnInit {
       }
       if ((Data as any).addedDate) {
         //alert(moment((Data as any).addedDate).format("jYYYY/jMM/jDD"));
-        $('td:eq(4)', HtmlRow).html(moment((Data as any).addedDate).format("jYYYY/jMM/jDD HH:mm:ss a"));
+        $('td:eq(3)', HtmlRow).html(moment((Data as any).addedDate).format("jYYYY/jMM/jDD HH:mm:ss a"));
+        $('td:eq(3)', HtmlRow).addClass('dt-center LtrDirection');
       }
       $('td', HtmlRow).off('click');
 
@@ -130,7 +133,7 @@ export class GeneralofficeComponent implements OnInit {
       //console.log(settings);
       var pagination = $(this).closest('.dataTables_wrapper').find('.dataTables_paginate');
       //console.log(pagination);
-      //pagination.toggle(settings.oApi.page.info()!.pages > 1);
+      //pagination.toggle(settings.oApi.page.info()!.pages > 1);      
     }
 
     $("document").on("ready", function () {
@@ -276,7 +279,7 @@ export class GeneralofficeComponent implements OnInit {
       },
       () => {
         this.dataTable = $(this.table.nativeElement);
-        this.dataTable.DataTable(this.dtOptions);
+        this.dataTable.DataTable(this.dtOptions);        
       });
   }
 
