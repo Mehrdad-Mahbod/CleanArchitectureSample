@@ -98,7 +98,10 @@ export class DataTable {
             //dom: 'Rt', 
             initComplete: function () {
                 /*alert("123");*/
+                if(!$('#MainTbl thead tr').hasClass('filters'))
+                {
                 $('#MainTbl thead tr').clone(true).addClass('filters').appendTo('#MainTbl thead');
+                }
                 var api = this.api();
                 // For each column
                 api.columns().eq(0).each(function (colIdx: any) {

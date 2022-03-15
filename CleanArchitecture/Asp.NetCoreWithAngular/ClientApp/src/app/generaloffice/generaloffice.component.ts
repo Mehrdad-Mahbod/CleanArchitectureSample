@@ -32,7 +32,11 @@ export class GeneralofficeComponent implements OnInit {
   dtOptions: any = {}; //Responsive 
   public dataTable: any;
   dtTrigger: Subject<any> = new Subject<any>();
+  
+  public ngModelGeneralOfficeVM: any;
   GeneralOfficeVMList: GeneralOfficeVM[] = [];
+  public CurrentGeneralOfficeVM?: GeneralOfficeVM;
+
   public InputForm!: FormGroup;
   public BtnStateRegister: boolean = false;
   public BtnStateDelete: boolean = false;
@@ -110,7 +114,7 @@ export class GeneralofficeComponent implements OnInit {
       }
       $('td', HtmlRow).off('click');
 
-      $('td', HtmlRow).on('click', () => {
+      $('td', HtmlRow).on('click', () => {        
         if (MySelf.EditCommand == false) {
           //به همین شکل استفاده کرد patchValue می توان از  reset به جای
           MySelf.InputForm.reset({
@@ -119,7 +123,9 @@ export class GeneralofficeComponent implements OnInit {
             'Priority': (Data as any).priority,
             'IsDeleted': (Data as any).isDeleted /*false*/
           });
-          MySelf.Name?.nativeElement.focus();
+          MySelf.Name?.nativeElement.focus();    
+          /*MySelf.ngModelGeneralOfficeVM = (Data as any).GeneralOfficeVMList;*/
+          MySelf.ngModelGeneralOfficeVM = Data;
         }
       });
 
@@ -163,12 +169,11 @@ export class GeneralofficeComponent implements OnInit {
     this.GetControl['Name'].setValue('');
     this.GetControl['Priority'].setValue('');
 
-    this.Name!.nativeElement.focus();
-
-
     this.InputForm.controls['Name'].reset();
     this.InputForm.controls['Priority'].reset();
 
+    /*this.Name!.nativeElement.focus();*/
+    this.Name!.nativeElement.select()
 
     $("#EditIcon").removeClass();
     $("#EditIcon").addClass("fa fa-pencil-square-o fa-lg");
@@ -179,16 +184,92 @@ export class GeneralofficeComponent implements OnInit {
   }
 
   BtnRegister() {
-    this.BtnNew();
+    this.BtnStateRegister = true;
+    let CurrentUser = new GetCurrentUserToken();
+
+    let GeneralOfficeVM: GeneralOfficeVM = Object.assign({}, this.InputForm.value);
+    //let GeneralOfficeVM = {} as GeneralOfficeVM;
+    //GeneralOfficeVM.userId = Number.parseInt(CurrentUser!.GetUserID());
+
+    if (this.InputForm.valid) {
+      if (this.EditCommand == false) { //Save (EditCommand Is false)
+        Swal.fire({
+          title: 'توجه',
+          text: 'آیا تمایلی به ثبت اطلاعات دارید؟',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'بلی',
+          cancelButtonText: 'خیر'
+        }).then((result: any) => {
+          if (result.isConfirmed) {
+            GeneralOfficeVM.id = 0;
+            //GeneralOfficeVM.drugId = this.CurrentDrugs!.id;
+
+            this.HttpService.HttpPost(this.ServerUrl.Url + "/GeneralOffice/RegisterGeneralOffice", GeneralOfficeVM).subscribe(
+              Data => {
+                //console.log(Data);
+                this.toastr.success('با موفقیت ثبت شد.', 'تایید');
+              },
+              (Error) => {
+                console.log(Error);
+                alert(JSON.stringify(Error.error.Message));
+                this.BtnStateRegister = false;
+              },
+              () => {
+                this.BtnNew();
+                this.GetAll();
+              });
+          } else {
+            Swal.fire('انصراف', 'اطلاعاتی ثبت نشد', 'error')
+              .then((result) => {
+                if (result.isConfirmed) {
+                  this.BtnNew();
+                }
+              });
+          }
+        });
+      }
+      else { //Edit  (EditCommand Is true)
+        GeneralOfficeVM.id = this.ngModelGeneralOfficeVM?.id!;
+        
+        this.HttpService.HttpPost(this.ServerUrl.Url + "/GeneralOffice/EditGeneralOffice", GeneralOfficeVM).subscribe(
+          Data => {
+            this.toastr.success('به روز رسانی انجام شد!', 'تایید');
+          },
+          (Error) => {
+            console.log(Error);
+            alert(JSON.stringify(Error.error.Message));
+          },
+          () => {
+            this.BtnNew();
+            this.GetAll();
+          });
+      }
+    }
+    else {
+      this.toastr.error('اطلاعات وارد صحیح نیست.لطفا مجددا بررسی نمایید!', 'خطا');
+      this.BtnStateRegister = false;
+      this.BtnNew();
+    }
   }
 
   BtnUpdate() {
     if (this.InputForm.status != "INVALID") {
+      if($("#EditIcon").hasClass("spinner-grow-sm"))
+      {
+        this.EditCommand = false;
+      this.BtnStateDelete = false;
+        $("#EditIcon").removeClass();
+        $("#EditIcon").addClass("fa fa-pencil-square-o fa-lg");
+      }
+      else
+      {
       this.EditCommand = true;
       this.BtnStateDelete = false;
       this.Name?.nativeElement.focus();
       $("#EditIcon").removeClass();
       $("#EditIcon").addClass("spinner-grow spinner-grow-sm text-danger");
+      }
     }
     else {
       this.toastr.warning('اطلاعاتی برای ویرایش انتخاب نکرده اید', 'خطا');
@@ -261,17 +342,13 @@ export class GeneralofficeComponent implements OnInit {
 
   /*برگرفته از این سایت*/
   //https://medium.com/ramsatt/integrate-data-table-with-angular-8-application-with-json-backend-f1071feeb18f
-  GetAll() {
-    
+  GetAll() {    
     let GeneralOfficeVM = {} as GeneralOfficeVM;
-
     //GeneralOfficeVM.userId = Number.parseInt(this.CurrentUser.GetUserToken().UserID);
-
-
     this.HttpService.HttpGetWithObject(this.ServerUrl.Url + "/GeneralOffice/FetchListGeneralOffice", GeneralOfficeVM).subscribe(
       Data => {
         this.GeneralOfficeVMList = Data;
-        //this.ExaminationList = (Data as any).data;
+        //this.GeneralOfficeVMList = (Data as any).data;
         this.dtOptions.data = this.GeneralOfficeVMList;
       },
       (error) => {
@@ -303,6 +380,8 @@ export class GeneralofficeComponent implements OnInit {
         }).then((result: any) => {
           if (result.isConfirmed) {
             GeneralOfficeVM.id = 0;
+            //GeneralOfficeVM.drugId = this.CurrentDrugs!.id;
+
             this.HttpService.HttpPost(this.ServerUrl.Url + "/GeneralOffice/RegisterGeneralOffice", GeneralOfficeVM).subscribe(
               Data => {
                 //console.log(Data);
@@ -315,7 +394,6 @@ export class GeneralofficeComponent implements OnInit {
               },
               () => {
                 this.BtnNew();
-                this.HideModal();
                 this.GetAll();
               });
           } else {
@@ -323,13 +401,14 @@ export class GeneralofficeComponent implements OnInit {
               .then((result) => {
                 if (result.isConfirmed) {
                   this.BtnNew();
-                  this.HideModal();
                 }
               });
           }
         });
       }
-      else { //Edit  (EditCommand Is true) 
+      else { //Edit  (EditCommand Is true)
+        GeneralOfficeVM.id = this.ngModelGeneralOfficeVM?.id!;
+        
         this.HttpService.HttpPost(this.ServerUrl.Url + "/GeneralOffice/EditGeneralOffice", GeneralOfficeVM).subscribe(
           Data => {
             this.toastr.success('به روز رسانی انجام شد!', 'تایید');
@@ -340,7 +419,6 @@ export class GeneralofficeComponent implements OnInit {
           },
           () => {
             this.BtnNew();
-            this.HideModal();
             this.GetAll();
           });
       }
@@ -349,7 +427,6 @@ export class GeneralofficeComponent implements OnInit {
       this.toastr.error('اطلاعات وارد صحیح نیست.لطفا مجددا بررسی نمایید!', 'خطا');
       this.BtnStateRegister = false;
       this.BtnNew();
-      this.HideModal();
     }
   }
 
