@@ -1,9 +1,5 @@
 import { AutofillMonitor } from '@angular/cdk/text-field';
 import * as moment from 'jalali-moment';
-/*mport { Directive, Injectable, ViewChild } from '@angular/core';
-import { DataTableDirective } from 'angular-datatables';
-import * as MyPublicMethod from '../PublicMethod';*/
-
 
 
 export class DataTable {
